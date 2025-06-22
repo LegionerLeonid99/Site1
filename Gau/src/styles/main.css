@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import component-specific styles */
-@import './components.css';
-
 /* Custom CSS that can't be replaced with Tailwind */
 @layer base {
   * {
@@ -25,9 +22,9 @@
 }
 
 @layer components {
-  /* Custom button styles that extend Tailwind */
+  /* Custom button styles using @apply with Tailwind v3 */
   .btn-custom {
-    @apply px-8 py-3 rounded-lg font-semibold cursor-pointer transition-all duration-300 inline-block text-center;
+    @apply px-8 py-3 rounded-lg font-semibold cursor-pointer transition-all duration-300 inline-block text-center border-0;
   }
 
   .btn-primary-custom {
@@ -149,5 +146,104 @@
 
   .shadow-strong {
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
+}
+
+/* Additional Component Enhancements */
+/* Enhanced service card hover effects */
+.service-card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Enhanced testimonial transitions */
+.testimonial {
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Enhanced focus states for accessibility */
+.form-input:focus {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+}
+
+/* Button loading states (for future enhancement) */
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced mobile menu animation */
+@media (max-width: 1024px) {
+  .nav-menu.active {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Print styles */
+@media print {
+  .nav-toggle,
+  .floating-card,
+  .testimonial-dots,
+  footer {
+    display: none !important;
+  }
+  
+  .hero-gradient {
+    background: #4f46e5 !important;
+    print-color-adjust: exact;
   }
 }
