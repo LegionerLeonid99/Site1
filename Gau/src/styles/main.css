@@ -22,29 +22,7 @@
 }
 
 @layer components {
-  /* Custom button styles using @apply with Tailwind v3 */
-  .btn-custom {
-    @apply px-8 py-3 rounded-lg font-semibold cursor-pointer transition-all duration-300 inline-block text-center border-0;
-  }
-
-  .btn-primary-custom {
-    @apply btn-custom bg-brand text-white hover:bg-indigo-700 hover:-translate-y-0.5 hover:shadow-lg;
-  }
-
-  .btn-secondary-custom {
-    @apply btn-custom bg-transparent text-white border-2 border-white hover:bg-white hover:text-brand;
-  }
-
-  .btn-outline-custom {
-    @apply btn-custom bg-transparent text-brand border-2 border-brand hover:bg-brand hover:text-white;
-  }
-
-  /* Hero gradient that's complex for Tailwind */
-  .hero-gradient {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-
-  /* Floating animation */
+  /* Floating animation for special elements */
   .floating-card {
     animation: float 3s ease-in-out infinite;
   }
@@ -58,74 +36,9 @@
     }
   }
 
-  /* Service card hover effects */
-  .service-card {
-    @apply bg-white p-8 rounded-2xl text-center shadow-lg transition-all duration-300;
-  }
-
-  .service-card:hover {
-    @apply -translate-y-2 shadow-2xl;
-  }
-
-  /* Testimonial slider specific styles */
-  .testimonial-slider {
-    position: relative;
-    height: 200px;
-  }
-
-  .testimonial {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-
-  .testimonial.active {
-    opacity: 1;
-  }
-
-  /* Form focus styles */
-  .form-input {
-    @apply w-full p-4 border-2 border-gray-200 rounded-lg text-base transition-colors duration-300 focus:outline-none focus:border-brand;
-  }
-
-  /* Navigation mobile menu */
-  .nav-menu {
-    @apply hidden lg:flex lg:gap-8;
-  }
-
-  .nav-menu.active {
-    @apply flex flex-col fixed left-0 top-16 w-full bg-white shadow-lg p-5 z-50;
-  }
-
-  /* Mobile hamburger animation */
-  .nav-toggle {
-    @apply lg:hidden flex flex-col cursor-pointer;
-  }
-
-  .bar {
-    @apply w-6 h-0.5 bg-gray-800 my-1 transition-all duration-300;
-  }
-
-  /* Backdrop blur for hero card */
-  .backdrop-blur-custom {
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  /* Dot navigation for testimonials */
-  .testimonial-dot {
-    @apply w-3 h-3 rounded-full border-0 cursor-pointer transition-colors duration-300;
-  }
-
-  .testimonial-dot:not(.active) {
-    @apply bg-gray-300;
-  }
-
-  .testimonial-dot.active {
-    @apply bg-brand;
+  /* Enhanced focus states for accessibility */
+  .form-input:focus {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
   }
 }
 
@@ -133,10 +46,6 @@
   /* Custom utilities for specific use cases */
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .bg-gradient-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
 
   /* Custom box shadows */
@@ -150,21 +59,6 @@
 }
 
 /* Additional Component Enhancements */
-/* Enhanced service card hover effects */
-.service-card {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-.service-card:hover {
-  transform: translateY(-8px) scale(1.02) !important;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Enhanced testimonial transitions */
-.testimonial {
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
 /* Custom scrollbar for better UX */
 ::-webkit-scrollbar {
   width: 8px;
@@ -183,67 +77,11 @@
   background: #94a3b8;
 }
 
-/* Enhanced focus states for accessibility */
-.form-input:focus {
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
-}
-
-/* Button loading states (for future enhancement) */
-.btn-loading {
-  position: relative;
-  pointer-events: none;
-}
-
-.btn-loading::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  top: 50%;
-  left: 50%;
-  margin-left: -8px;
-  margin-top: -8px;
-  border: 2px solid transparent;
-  border-top-color: currentColor;
-  border-radius: 50%;
-  animation: spin 1s ease infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Enhanced mobile menu animation */
-@media (max-width: 1024px) {
-  .nav-menu.active {
-    animation: slideDown 0.3s ease-out;
-  }
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-
 /* Print styles */
 @media print {
   .nav-toggle,
   .floating-card,
-  .testimonial-dots,
   footer {
     display: none !important;
-  }
-  
-  .hero-gradient {
-    background: #4f46e5 !important;
-    print-color-adjust: exact;
   }
 }
