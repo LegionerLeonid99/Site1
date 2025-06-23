@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import Layout from '../components/Layout.vue'
 import BackgroundSlider from '../components/BackgroundSlider.vue'
+import { businessConfig, getFullAddress, getGoogleMapsUrl, getGoogleMapsEmbedUrlBasic } from '../config/business.js'
 
 // Reactive data
 const isMenuOpen = ref(false)
@@ -337,6 +338,143 @@ onMounted(() => {
             </p>
           </div>
         </div>
+      </div>    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="section-gray py-24 relative overflow-hidden">
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold sm:text-4xl professional-heading">Visit Our Location</h2>
+          <p class="mt-6 text-gray-600 professional-text">
+            Find us easily or contact us for on-site repair services
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <!-- Business Information -->
+          <div class="space-y-8">
+            <!-- Address Card -->
+            <div class="professional-card p-8">
+              <div class="flex items-start space-x-4">
+                <div class="feature-icon">
+                  <div class="text-2xl">📍</div>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold professional-subheading mb-2">Our Address</h3>
+                  <p class="text-gray-600 professional-text">{{ getFullAddress() }}</p>
+                  <a 
+                    :href="getGoogleMapsUrl()" 
+                    target="_blank"
+                    class="inline-flex items-center mt-3 text-brand hover:text-blue-700 font-medium"
+                  >
+                    Get Directions
+                    <span class="ml-1">↗</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="professional-card p-8">
+              <h3 class="text-xl font-bold professional-subheading mb-6">Contact Information</h3>
+              <div class="space-y-4">
+                <!-- Phone -->
+                <div class="flex items-center space-x-4">
+                  <div class="feature-icon-small">
+                    <div class="text-lg">📞</div>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Phone</p>
+                    <a 
+                      :href="`tel:${businessConfig.location.contact.phone}`"
+                      class="text-brand hover:text-blue-700 font-medium"
+                    >
+                      {{ businessConfig.location.contact.phone }}
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="flex items-center space-x-4">
+                  <div class="feature-icon-small">
+                    <div class="text-lg">📧</div>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Email</p>
+                    <a 
+                      :href="`mailto:${businessConfig.location.contact.email}`"
+                      class="text-brand hover:text-blue-700 font-medium"
+                    >
+                      {{ businessConfig.location.contact.email }}
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Website -->
+                <div class="flex items-center space-x-4">
+                  <div class="feature-icon-small">
+                    <div class="text-lg">🌐</div>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Website</p>
+                    <p class="text-gray-600">{{ businessConfig.location.contact.website }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="professional-card p-8">
+              <h3 class="text-xl font-bold professional-subheading mb-6">Business Hours</h3>
+              <div class="space-y-2">
+                <div v-for="(hours, day) in businessConfig.business.hours" :key="day" 
+                     class="flex justify-between items-center">
+                  <span class="capitalize font-medium text-gray-900">{{ day }}</span>
+                  <span class="text-gray-600">{{ hours }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Service Areas -->
+            <div class="professional-card p-8">
+              <h3 class="text-xl font-bold professional-subheading mb-6">Service Areas</h3>
+              <div class="grid grid-cols-2 gap-2">
+                <div v-for="area in businessConfig.business.serviceAreas" :key="area"
+                     class="flex items-center space-x-2">
+                  <span class="text-green-500">✓</span>
+                  <span class="text-gray-600 text-sm">{{ area }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="lg:sticky lg:top-8">
+            <div class="professional-card p-1 overflow-hidden">
+              <iframe
+                :src="getGoogleMapsEmbedUrlBasic()"
+                :style="{ 
+                  height: businessConfig.map.height, 
+                  borderRadius: businessConfig.map.borderRadius 
+                }"
+                width="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                class="w-full"
+              ></iframe>
+            </div>
+            
+            <!-- Map Notice -->
+            <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p class="text-sm text-blue-800">
+                <strong>Note:</strong> We provide on-site repair services throughout our service areas. 
+                Contact us to schedule an appointment at your location.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -429,4 +567,27 @@ onMounted(() => {
 
 <style scoped>
 /* Component-specific styles */
+
+/* Feature icon small for contact info */
+.feature-icon-small {
+  @apply w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center;
+}
+
+/* Enhanced card hover effects for location section */
+.professional-card:hover {
+  @apply shadow-lg transform -translate-y-1;
+  transition: all 0.3s ease;
+}
+
+/* Business hours styling */
+.business-hours-item {
+  @apply py-2 border-b border-gray-100 last:border-b-0;
+}
+
+/* Map container responsive styling */
+@media (max-width: 1024px) {
+  .lg\:sticky {
+    position: static !important;
+  }
+}
 </style>

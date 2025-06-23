@@ -68,10 +68,14 @@ const scrollToSection = (sectionId) => {
                   <router-link to="/faq" class="text-gray-600 transition hover:text-brand professional-underline">
                     FAQ
                   </router-link>
-                </li>
-                <li>
+                </li>                <li>
                   <a href="/#testimonials" class="text-gray-600 transition hover:text-brand professional-underline cursor-pointer">
                     Testimonials
+                  </a>
+                </li>
+                <li>
+                  <a href="/#location" class="text-gray-600 transition hover:text-brand professional-underline cursor-pointer">
+                    Location
                   </a>
                 </li>
                 <li>
@@ -131,8 +135,8 @@ const scrollToSection = (sectionId) => {
               <li><router-link to="/services/hobs" class="text-gray-600 transition hover:text-brand professional-underline">Hobs</router-link></li>
               <li><router-link to="/services/kitchen-ventilators" class="text-gray-600 transition hover:text-brand professional-underline">Kitchen Ventilators</router-link></li>
               <li><router-link to="/services/all-electrical" class="text-gray-600 transition hover:text-brand professional-underline">All Electrical</router-link></li>
-              <li><router-link to="/services/commercial-equipment" class="text-gray-600 transition hover:text-brand professional-underline">Commercial Equipment</router-link></li>
-              <li><a href="/#about" class="text-gray-600 transition hover:text-brand professional-underline">About</a></li>
+              <li><router-link to="/services/commercial-equipment" class="text-gray-600 transition hover:text-brand professional-underline">Commercial Equipment</router-link></li>              <li><a href="/#about" class="text-gray-600 transition hover:text-brand professional-underline">About</a></li>
+              <li><a href="/#location" class="text-gray-600 transition hover:text-brand professional-underline">Location</a></li>
               <li><a href="/#contact" class="text-gray-600 transition hover:text-brand professional-underline">Contact</a></li>
             </ul>
           </nav>
