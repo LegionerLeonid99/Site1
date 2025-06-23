@@ -95,28 +95,44 @@ const nextTestimonial = () => {
   currentTestimonial.value = (currentTestimonial.value + 1) % testimonials.value.length
 }
 
-const submitForm = () => {
+const submitForm = async () => {
   // Add loading state
   const button = document.querySelector('button[type="submit"]')
   button.classList.add('professional-loading')
   button.textContent = 'Sending...'
   
-  // Simulate sending (in a real application, you would send this data to a server)
-  setTimeout(() => {
-    alert('🎉 Thank you for your inquiry! We will contact you soon.')
+  try {
+    const response = await fetch('http://localhost:5000/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(contactForm.value)
+    })
     
-    // Reset form
-    contactForm.value = {
-      name: '',
-      email: '',
-      service: '',
-      message: ''
+    const result = await response.json()
+    
+    if (result.success) {
+      alert('🎉 Thank you for your inquiry! We will contact you soon.')
+      
+      // Reset form
+      contactForm.value = {
+        name: '',
+        email: '',
+        service: '',
+        message: ''
+      }
+    } else {
+      alert('❌ Failed to send message: ' + result.message)
     }
-    
+  } catch (error) {
+    console.error('Error sending form:', error)
+    alert('❌ Failed to send message. Please try again.')
+  } finally {
     // Reset button
     button.classList.remove('professional-loading')
     button.innerHTML = 'Send Message <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
-  }, 1500)
+  }
 }
 
 const scrollToSection = (sectionId) => {

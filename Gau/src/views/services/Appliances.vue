@@ -57,29 +57,47 @@ const contactForm = ref({
   message: ''
 })
 
-const submitForm = () => {
+const submitForm = async () => {
   // Add loading state
   const button = document.querySelector('button[type="submit"]')
   button.classList.add('professional-loading')
   button.textContent = 'Sending...'
   
-  setTimeout(() => {
-    alert('🎉 Thank you for your inquiry! We will contact you soon about your appliance repair.')
+  try {
+    const response = await fetch('http://localhost:5000/api/contact/appliances', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(contactForm.value)
+    })
     
-    // Reset form
-    contactForm.value = {
-      name: '',
-      email: '',
-      phone: '',
-      appliance: '',
-      brand: '',
-      issue: '',
-      message: ''
+    const result = await response.json()
+    
+    if (result.success) {
+      alert('🎉 Thank you for your inquiry! We will contact you soon about your appliance repair.')
+      
+      // Reset form
+      contactForm.value = {
+        name: '',
+        email: '',
+        phone: '',
+        appliance: '',
+        brand: '',
+        issue: '',
+        message: ''
+      }
+    } else {
+      alert('❌ Failed to send message: ' + result.message)
     }
-    
+  } catch (error) {
+    console.error('Error sending form:', error)
+    alert('❌ Failed to send message. Please try again.')
+  } finally {
+    // Reset button
     button.classList.remove('professional-loading')
     button.innerHTML = 'Request Service <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
-  }, 1500)
+  }
 }
 </script>
 

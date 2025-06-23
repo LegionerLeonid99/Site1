@@ -85,28 +85,45 @@ const contactForm = ref({
   message: ''
 })
 
-const submitForm = () => {
+const submitForm = async () => {
   const button = document.querySelector('button[type="submit"]')
   button.classList.add('professional-loading')
   button.textContent = 'Sending...'
   
-  setTimeout(() => {
-    alert('🎉 Thank you! We will contact you soon about your coffee machine repair.')
+  try {
+    const response = await fetch('http://localhost:5000/api/contact/coffee-machines', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(contactForm.value)
+    })
     
-    contactForm.value = {
-      name: '',
-      email: '',
-      phone: '',
-      machineType: '',
-      brand: '',
-      model: '',
-      issue: '',
-      message: ''
+    const result = await response.json()
+    
+    if (result.success) {
+      alert('🎉 Thank you! We will contact you soon about your coffee machine repair.')
+      
+      contactForm.value = {
+        name: '',
+        email: '',
+        phone: '',
+        machineType: '',
+        brand: '',
+        model: '',
+        issue: '',
+        message: ''
+      }
+    } else {
+      alert('❌ Failed to send message: ' + result.message)
     }
-    
+  } catch (error) {
+    console.error('Error sending form:', error)
+    alert('❌ Failed to send message. Please try again.')
+  } finally {
     button.classList.remove('professional-loading')
     button.innerHTML = 'Request Service <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
-  }, 1500)
+  }
 }
 </script>
 
