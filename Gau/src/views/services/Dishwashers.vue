@@ -303,7 +303,7 @@ const submitForm = () => {
                 <div class="feature-icon">🛡️</div>
                 <div>
                   <h3 class="font-bold professional-subheading">Warranty</h3>
-                  <p class="text-gray-600">90-day parts and labor warranty</p>
+                  <p class="text-gray-600">XX-day parts and labor warranty</p>
                 </div>
               </div>              <div class="flex items-center gap-4">
                 <div class="feature-icon">�</div>

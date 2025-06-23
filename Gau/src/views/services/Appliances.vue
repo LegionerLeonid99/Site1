@@ -176,7 +176,7 @@ const submitForm = () => {
           <div class="professional-card text-center">
             <div class="service-icon mx-auto">🛡️</div>
             <h3 class="mt-4 text-lg font-bold professional-subheading">Parts Warranty</h3>
-            <p class="mt-2 text-gray-600 professional-text">90-day warranty on all parts and labor</p>
+            <p class="mt-2 text-gray-600 professional-text">XX-day warranty on all parts and labor</p>
           </div>
 
           <div class="professional-card text-center">

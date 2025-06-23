@@ -17,7 +17,7 @@ const faqs = ref([
   // },
   // {
   //   question: "Do you provide warranty on repairs?",
-  //   answer: "Yes, we provide a comprehensive 90-day warranty on all parts and labor for your peace of mind."
+  //   answer: "Yes, we provide a comprehensive XX-day warranty on all parts and labor for your peace of mind."
   // }
 ])
 

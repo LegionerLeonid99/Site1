@@ -206,11 +206,10 @@ onMounted(() => {
       <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
           <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-600 flex items-center justify-center rounded-lg">
-              <div class="text-center text-white">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-600 flex items-center justify-center rounded-lg">              <div class="text-center text-white">
                 <div class="text-6xl mb-4">🔧</div>
                 <h3 class="text-2xl font-bold professional-subheading text-white">Expertise</h3>
-                <p class="text-lg opacity-90">25+ Years of Appliance Repair</p>
+                <p class="text-lg opacity-90">XX+ Years of Appliance Repair</p>
               </div>
             </div>
           </div>
@@ -272,20 +271,18 @@ onMounted(() => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <!-- Stats -->
+            </div>            <!-- Stats -->
             <div class="mt-12 grid grid-cols-3 gap-4">
               <div class="stat-card">
-                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">5000+</dt>
+                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">XXX+</dt>
                 <dd class="text-sm text-gray-500">Repairs Completed</dd>
               </div>
               <div class="stat-card">
-                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">98%</dt>
+                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">XX%</dt>
                 <dd class="text-sm text-gray-500">Customer Satisfaction</dd>
               </div>
               <div class="stat-card">
-                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">25+</dt>
+                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">XX+</dt>
                 <dd class="text-sm text-gray-500">Years Experience</dd>
               </div>
             </div>
