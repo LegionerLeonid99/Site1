@@ -3,6 +3,16 @@ import { ref, onMounted } from 'vue'
 import Layout from '../components/Layout.vue'
 import BackgroundSlider from '../components/BackgroundSlider.vue'
 import { businessConfig, getFullAddress, getGoogleMapsUrl, getGoogleMapsEmbedUrlBasic } from '../config/business.js'
+import { useSEO } from '../composables/useSEO.js'
+
+// 🎯 SEO Setup for Home Page
+useSEO({
+  page: 'home',
+  customMeta: {
+    'google-site-verification': '', // Add your Google Search Console verification code here
+    'msvalidate.01': '' // Add your Bing Webmaster verification code here
+  }
+})
 
 // Reactive data
 const isMenuOpen = ref(false)

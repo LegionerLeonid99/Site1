@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
+import { useSEO } from '../../composables/useSEO.js'
+
+// 🎯 SEO Setup for Commercial Equipment Page
+useSEO({ page: 'commercialEquipment' })
 
 const commercialEquipment = ref([
   {

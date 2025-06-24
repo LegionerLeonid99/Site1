@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
+import { useSEO } from '../../composables/useSEO.js'
+
+// 🎯 SEO Setup for Coffee Machines Page
+useSEO({ page: 'coffeeMachines' })
 
 // Coffee machine types and services
 const coffeeMachineTypes = ref([

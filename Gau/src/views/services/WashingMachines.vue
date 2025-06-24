@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
+import { useSEO } from '../../composables/useSEO.js'
+
+// 🎯 SEO Setup for Washing Machines Page
+useSEO({ page: 'washingMachines' })
 
 // Washing machine types and services
 const washingMachineTypes = ref([

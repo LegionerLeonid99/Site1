@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
+import { useSEO } from '../../composables/useSEO.js'
+
+// 🎯 SEO Setup for Kitchen Ventilators Page
+useSEO({ page: 'kitchenVentilators' })
 
 const ventilatorTypes = ref([
   {

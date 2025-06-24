@@ -14,9 +14,9 @@ export const businessConfig = {
   location: {
     // 🏢 BUSINESS ADDRESS - Update this with your actual business address
     address: {
-      street: "123 Repair Street",           // ← CHANGE THIS: Street address
+      street: "206 Maritime House",           // ← CHANGE THIS: Street address
       city: "London",                        // ← CHANGE THIS: City name
-      postcode: "SW1A 1AA",                 // ← CHANGE THIS: Postcode
+      postcode: "SE18 6HB",                 // ← CHANGE THIS: Postcode
       country: "United Kingdom"             // ← CHANGE THIS: Country
     },
     
