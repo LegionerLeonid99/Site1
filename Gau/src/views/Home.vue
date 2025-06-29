@@ -242,11 +242,11 @@ onMounted(() => {
           </div>
 
           <div class="lg:py-24">
-            <h2 class="text-3xl font-bold sm:text-4xl professional-heading">Why Choose FixIt Appliances?</h2>
+            <h2 class="text-3xl font-bold sm:text-4xl professional-heading">Why Choose Me?</h2>
 
             <div class="mt-6">
               <p class="text-gray-600 professional-text">
-                We are your trusted local appliance experts, providing fast, reliable, and affordable repair services for all major brands!
+                I'm your trusted local appliance expert, providing fast, reliable, and affordable repair services for all major brands. With years of hands-on experience, I personally handle every repair to ensure quality workmanship.
               </p>
             </div>
 
@@ -257,8 +257,8 @@ onMounted(() => {
                     <div class="text-2xl">👨‍🔧</div>
                   </span>
                   <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Certified Technicians</h3>
-                    <p class="mt-1 text-gray-600 professional-text">Our experienced technicians are certified to work on all major appliance brands</p>
+                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Certified Expert</h3>
+                    <p class="mt-1 text-gray-600 professional-text">I'm fully certified and experienced in repairing all major appliance brands and models</p>
                   </div>
                 </div>
               </div>
@@ -270,7 +270,7 @@ onMounted(() => {
                   </span>
                   <div>
                     <h3 class="text-lg font-medium sm:text-xl professional-subheading">Same-Day Service</h3>
-                    <p class="mt-1 text-gray-600 professional-text">Most repairs completed same day with our mobile service units</p>
+                    <p class="mt-1 text-gray-600 professional-text">Most repairs completed the same day with my fully equipped mobile service van</p>
                   </div>
                 </div>
               </div>
@@ -281,8 +281,8 @@ onMounted(() => {
                     <div class="text-2xl">🛡️</div>
                   </span>
                   <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Warranty Coverage</h3>
-                    <p class="mt-1 text-gray-600 professional-text">All repairs backed by our comprehensive parts and labor warranty</p>
+                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Personal Guarantee</h3>
+                    <p class="mt-1 text-gray-600 professional-text">I personally guarantee all my work with comprehensive parts and labor warranty</p>
                   </div>
                 </div>
               </div>
@@ -290,11 +290,11 @@ onMounted(() => {
               <div class="professional-card">
                 <div class="flex items-center gap-4">
                   <span class="feature-icon">
-                    <div class="text-2xl">📞</div>
+                    <div class="text-2xl">�</div>
                   </span>
                   <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">24/7 Emergency</h3>
-                    <p class="mt-1 text-gray-600 professional-text">Emergency service available for critical appliance breakdowns</p>
+                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Fair Pricing</h3>
+                    <p class="mt-1 text-gray-600 professional-text">No overhead costs means competitive prices and excellent value for quality service</p>
                   </div>
                 </div>
               </div>
