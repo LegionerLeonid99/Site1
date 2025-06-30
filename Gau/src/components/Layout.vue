@@ -54,7 +54,7 @@ const scrollToSection = (sectionId) => {
                       <router-link to="/services/dishwashers" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">Dishwashers</router-link>
                       <router-link to="/services/washing-machines" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">Washing Machines</router-link>
                       <router-link to="/services/hobs" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">Hobs</router-link>
-                      <router-link to="/services/kitchen-ventilators" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">Kitchen Ventilators</router-link>
+                      <router-link to="/services/air-conditioners" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">Air Conditioners</router-link>
                       <router-link to="/services/all-electrical" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">All Electrical</router-link>
                       <router-link to="/services/commercial-equipment" class="block px-4 py-2 text-sm text-gray-600 hover:text-brand hover:bg-gray-50 rounded-md">Commercial Equipment</router-link>
                     </div>
@@ -65,9 +65,9 @@ const scrollToSection = (sectionId) => {
                   </a>
                 </li>
                 <li>
-                  <router-link to="/faq" class="text-gray-600 transition hover:text-brand professional-underline">
+                  <a href="/#faq" class="text-gray-600 transition hover:text-brand professional-underline cursor-pointer">
                     FAQ
-                  </router-link>
+                  </a>
                 </li>                <li>
                   <a href="/#testimonials" class="text-gray-600 transition hover:text-brand professional-underline cursor-pointer">
                     Testimonials
@@ -133,11 +133,12 @@ const scrollToSection = (sectionId) => {
               <li><router-link to="/services/dishwashers" class="text-gray-600 transition hover:text-brand professional-underline">Dishwashers</router-link></li>
               <li><router-link to="/services/washing-machines" class="text-gray-600 transition hover:text-brand professional-underline">Washing Machines</router-link></li>
               <li><router-link to="/services/hobs" class="text-gray-600 transition hover:text-brand professional-underline">Hobs</router-link></li>
-              <li><router-link to="/services/kitchen-ventilators" class="text-gray-600 transition hover:text-brand professional-underline">Kitchen Ventilators</router-link></li>
+              <li><router-link to="/services/air-conditioners" class="text-gray-600 transition hover:text-brand professional-underline">Air Conditioners</router-link></li>
               <li><router-link to="/services/all-electrical" class="text-gray-600 transition hover:text-brand professional-underline">All Electrical</router-link></li>
               <li><router-link to="/services/commercial-equipment" class="text-gray-600 transition hover:text-brand professional-underline">Commercial Equipment</router-link></li>              <li><a href="/#about" class="text-gray-600 transition hover:text-brand professional-underline">About</a></li>
+              <li><a href="/#faq" class="text-gray-600 transition hover:text-brand professional-underline cursor-pointer">FAQ</a></li>
               <li><a href="/#location" class="text-gray-600 transition hover:text-brand professional-underline">Location</a></li>
-              <li><a href="/#contact" class="text-gray-600 transition hover:text-brand professional-underline">Contact</a></li>
+              <li><a href="/#contact" class="text-gray-600 transition hover:text-brand professional-underline cursor-pointer">Contact</a></li>
             </ul>
           </nav>
         </div>

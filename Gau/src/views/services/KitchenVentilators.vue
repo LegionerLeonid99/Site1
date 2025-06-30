@@ -69,7 +69,7 @@ const submitForm = () => {
             Expert repair for range hoods and kitchen ventilation systems. Clear the air!
           </p>
           <div class="mt-8">
-            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-50">
+            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4">
               Fix My Ventilator
             </a>
           </div>

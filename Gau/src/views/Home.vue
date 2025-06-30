@@ -50,10 +50,10 @@ const services = ref([
     route: '/services/hobs'
   },
   {
-    icon: '💨',
-    title: 'Kitchen Ventilators',
-    description: 'Kitchen ventilation system repair and maintenance',
-    route: '/services/kitchen-ventilators'
+    icon: '❄️',
+    title: 'Air Conditioners',
+    description: 'Air conditioning system repair, maintenance, and installation',
+    route: '/services/air-conditioners'
   },
   {
     icon: '⚡',
@@ -181,7 +181,7 @@ onMounted(() => {
 
             <div class="mt-8 flex flex-wrap justify-center gap-4">
               <button
-                class="professional-btn professional-btn-primary text-lg px-8 py-4 cursor-pointer bg-white text-white-600 hover:bg-red-50-50 shadow-lg"
+                class="professional-btn professional-btn-primary text-lg px-8 py-4 cursor-pointer shadow-lg"
                 @click="scrollToSection('services')"
               >
                 Our Services
@@ -233,7 +233,13 @@ onMounted(() => {
       <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
           <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-600 flex items-center justify-center rounded-lg">              <div class="text-center text-white">
+            <img 
+              src="/src/assets/images/hero-section/pexels-asphotograpy-213162.jpg" 
+              alt="Professional appliance repair expertise"
+              class="absolute inset-0 h-full w-full object-cover rounded-lg"
+            />
+            <div class="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
+              <div class="text-center text-white">
                 <div class="text-6xl mb-4">🔧</div>
                 <h3 class="text-2xl font-bold professional-subheading text-white">Expertise</h3>
                 <p class="text-lg opacity-90">XX+ Years of Appliance Repair</p>
@@ -360,11 +366,11 @@ onMounted(() => {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <!-- Business Information -->
-          <div class="space-y-8">
+          <div class="space-y-6">
             <!-- Address Card -->
-            <div class="professional-card p-8">
+            <div class="professional-card p-6">
               <div class="flex items-start space-x-4">
                 <div class="feature-icon">
                   <div class="text-2xl">📍</div>
@@ -385,9 +391,9 @@ onMounted(() => {
             </div>
 
             <!-- Contact Information -->
-            <div class="professional-card p-8">
-              <h3 class="text-xl font-bold professional-subheading mb-6">Contact Information</h3>
-              <div class="space-y-4">
+            <div class="professional-card p-6">
+              <h3 class="text-xl font-bold professional-subheading mb-4">Contact Information</h3>
+              <div class="space-y-3">
                 <!-- Phone -->
                 <div class="flex items-center space-x-4">
                   <div class="feature-icon-small">
@@ -434,8 +440,8 @@ onMounted(() => {
             </div>
 
             <!-- Business Hours -->
-            <div class="professional-card p-8">
-              <h3 class="text-xl font-bold professional-subheading mb-6">Business Hours</h3>
+            <div class="professional-card p-6">
+              <h3 class="text-xl font-bold professional-subheading mb-4">Business Hours</h3>
               <div class="space-y-2">
                 <div v-for="(hours, day) in businessConfig.business.hours" :key="day" 
                      class="flex justify-between items-center">
@@ -446,8 +452,8 @@ onMounted(() => {
             </div>
 
             <!-- Service Areas -->
-            <div class="professional-card p-8">
-              <h3 class="text-xl font-bold professional-subheading mb-6">Service Areas</h3>
+            <div class="professional-card p-6">
+              <h3 class="text-xl font-bold professional-subheading mb-4">Service Areas</h3>
               <div class="grid grid-cols-2 gap-2">
                 <div v-for="area in businessConfig.business.serviceAreas" :key="area"
                      class="flex items-center space-x-2">
@@ -483,6 +489,115 @@ onMounted(() => {
                 Contact us to schedule an appointment at your location.
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="bg-white py-24 relative overflow-hidden">
+      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold sm:text-4xl professional-heading">Frequently Asked Questions</h2>
+          <p class="mt-6 text-gray-600 professional-text">
+            Quick answers to common questions about our appliance repair services
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- FAQ Items -->
+          <div class="space-y-6">
+            <div class="professional-card p-6">
+              <h3 class="text-lg font-bold professional-subheading mb-3">How quickly can you repair my appliance?</h3>
+              <p class="text-gray-600 professional-text">Most repairs are completed the same day. I carry common parts in my van and can diagnose issues quickly to get your appliances working again.</p>
+            </div>
+
+            <div class="professional-card p-6">
+              <h3 class="text-lg font-bold professional-subheading mb-3">Do you provide warranties on repairs?</h3>
+              <p class="text-gray-600 professional-text">Yes! I provide comprehensive warranties on all parts and labor. You can have confidence that your repair will last.</p>
+            </div>
+
+            <div class="professional-card p-6">
+              <h3 class="text-lg font-bold professional-subheading mb-3">What brands do you service?</h3>
+              <p class="text-gray-600 professional-text">I service all major appliance brands including Bosch, Samsung, LG, Whirlpool, Hotpoint, AEG, and many more.</p>
+            </div>
+
+            <div class="professional-card p-6">
+              <h3 class="text-lg font-bold professional-subheading mb-3">How much does a repair cost?</h3>
+              <p class="text-gray-600 professional-text">I provide upfront pricing before starting any work. No hidden fees or surprises - you'll know the cost before I begin.</p>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="professional-card p-8">
+            <h3 class="text-xl font-bold professional-subheading mb-6">Still Have Questions?</h3>
+            <p class="text-gray-600 professional-text mb-6">Contact me directly and I'll get back to you quickly with answers.</p>
+            
+            <form @submit.prevent="submitForm" class="space-y-4">
+              <div>
+                <label for="faq-name" class="block text-sm font-medium text-gray-700 professional-subheading mb-2">Your Name</label>
+                <input
+                  v-model="contactForm.name"
+                  type="text"
+                  id="faq-name"
+                  required
+                  class="professional-input"
+                  placeholder="Enter your name..."
+                />
+              </div>
+
+              <div>
+                <label for="faq-email" class="block text-sm font-medium text-gray-700 professional-subheading mb-2">Email Address</label>
+                <input
+                  v-model="contactForm.email"
+                  type="email"
+                  id="faq-email"
+                  required
+                  class="professional-input"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              <div>
+                <label for="faq-service" class="block text-sm font-medium text-gray-700 professional-subheading mb-2">Service Needed</label>
+                <select
+                  v-model="contactForm.service"
+                  id="faq-service"
+                  required
+                  class="professional-input"
+                >
+                  <option value="">Select a service...</option>
+                  <option value="appliances">General Appliances</option>
+                  <option value="coffee-machines">Coffee Machines</option>
+                  <option value="dishwashers">Dishwashers</option>
+                  <option value="washing-machines">Washing Machines</option>
+                  <option value="hobs">Hobs</option>
+                  <option value="air-conditioners">Air Conditioners</option>
+                  <option value="all-electrical">All Electrical</option>
+                  <option value="commercial">Commercial Equipment</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="faq-message" class="block text-sm font-medium text-gray-700 professional-subheading mb-2">Your Question or Issue</label>
+                <textarea
+                  v-model="contactForm.message"
+                  id="faq-message"
+                  rows="3"
+                  required
+                  class="professional-input"
+                  placeholder="Ask your question or describe your appliance issue..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="professional-btn professional-btn-primary w-full py-3 group"
+              >
+                Send Question
+                <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -544,7 +659,7 @@ onMounted(() => {
                 <option value="dishwashers">Dishwashers</option>
                 <option value="washing-machines">Washing Machines</option>
                 <option value="hobs">Hobs</option>
-                <option value="kitchen-ventilators">Kitchen Ventilators</option>
+                <option value="air-conditioners">Air Conditioners</option>
                 <option value="all-electrical">All Electrical</option>
                 <option value="commercial">Commercial Equipment</option>
               </select>
@@ -580,7 +695,7 @@ onMounted(() => {
 
 /* Feature icon small for contact info */
 .feature-icon-small {
-  @apply w-10 h-10 bg-brand/10 rounded-lg flex items-center justify-center;
+  @apply w-12 h-12 bg-brand/10 rounded-lg flex items-center justify-center;
 }
 
 /* Enhanced card hover effects for location section */

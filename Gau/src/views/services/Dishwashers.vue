@@ -142,7 +142,7 @@ const submitForm = () => {
             Expert dishwasher repair and installation. Get your dishes sparkling clean again!
           </p>
           <div class="mt-8">
-            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-50">
+            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4">
               Fix My Dishwasher
             </a>
           </div>

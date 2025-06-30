@@ -69,7 +69,7 @@ const submitForm = () => {
             Complete electrical appliance repair service. From circuits to controls, we fix it all!
           </p>
           <div class="mt-8">
-            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-50">
+            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4">
               Get Electrical Service
             </a>
           </div>

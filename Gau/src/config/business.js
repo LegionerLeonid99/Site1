@@ -105,7 +105,9 @@ export const businessConfig = {
 // 🎯 UTILITY FUNCTIONS FOR COMPONENTS
 export const getFullAddress = () => {
   const addr = businessConfig.location.address
-  return `${addr.street}, ${addr.city}, ${addr.postcode}, ${addr.country}`
+  // Remove house number from address display
+  const streetWithoutNumber = addr.street.replace(/^\d+\s*/, '')
+  return `${streetWithoutNumber}, ${addr.city}, ${addr.postcode}, ${addr.country}`
 }
 
 export const getGoogleMapsUrl = () => {

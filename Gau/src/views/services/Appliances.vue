@@ -118,7 +118,7 @@ const submitForm = async () => {
             Expert repair services for all your home appliances. Fast, reliable, and affordable solutions.
           </p>
           <div class="mt-8">
-            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4 bg-white text-blue-600 hover:bg-gray-50">
+            <a href="#contact" class="professional-btn professional-btn-primary text-lg px-8 py-4">
               Get Free Quote
             </a>
           </div>

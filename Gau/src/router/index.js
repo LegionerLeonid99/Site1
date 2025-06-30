@@ -6,7 +6,7 @@ import CoffeeMachines from '../views/services/CoffeeMachines.vue'
 import Dishwashers from '../views/services/Dishwashers.vue'
 import WashingMachines from '../views/services/WashingMachines.vue'
 import Hobs from '../views/services/Hobs.vue'
-import KitchenVentilators from '../views/services/KitchenVentilators.vue'
+import AirConditioners from '../views/services/AirConditioners.vue'
 import AllElectrical from '../views/services/AllElectrical.vue'
 import CommercialEquipment from '../views/services/CommercialEquipment.vue'
 
@@ -47,9 +47,9 @@ const routes = [
     component: Hobs
   },
   {
-    path: '/services/kitchen-ventilators',
-    name: 'KitchenVentilators',
-    component: KitchenVentilators
+    path: '/services/air-conditioners',
+    name: 'AirConditioners',
+    component: AirConditioners
   },
   {
     path: '/services/all-electrical',

@@ -12,7 +12,7 @@ export const seoConfig = {
   business: {
     name: "FixIt Appliances",                    // ← CHANGE THIS: Your business name
     legalName: "FixIt Appliances Ltd",          // ← CHANGE THIS: Legal business name
-    description: "Expert appliance repair services for coffee machines, dishwashers, washing machines, hobs, kitchen ventilators, and all electrical appliances. Fast, reliable, and affordable.",
+    description: "Expert appliance repair services for coffee machines, dishwashers, washing machines, hobs, air conditioners, and all electrical appliances. Fast, reliable, and affordable.",
     
     // 📍 LOCAL SEO - Critical for local businesses
     location: {
@@ -113,10 +113,10 @@ export const seoConfig = {
       keywords: "hob repair London, gas hob repair, electric hob repair, induction hob service"
     },
     
-    kitchenVentilators: {
-      title: "Kitchen Ventilator Repair London | Extractor Fan & Hood Service",
-      description: "Professional kitchen ventilation repair in London. Extractor fans, cooker hoods, and ventilation systems. Noisy fan? Poor extraction? We fix it!",
-      keywords: "kitchen ventilator repair, extractor fan repair, cooker hood service, ventilation system"
+    airConditioners: {
+      title: "Air Conditioner Repair London | AC Service & Installation",
+      description: "Professional air conditioning repair in London. Split systems, window units, portable AC units. Not cooling? Strange noises? We fix all AC problems!",
+      keywords: "air conditioner repair, AC repair London, split system repair, window AC service, cooling problems"
     },
     
     commercialEquipment: {
