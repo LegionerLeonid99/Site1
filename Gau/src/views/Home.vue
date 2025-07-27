@@ -16,77 +16,55 @@ useSEO({
 
 // Reactive data
 const isMenuOpen = ref(false)
-const currentTestimonial = ref(0)
 
 const services = ref([
   {
-    icon: '🔧',
+    icon: '',
     title: 'Appliance Repair',
     description: 'Expert repair services for all major appliance brands and models',
     route: '/services/appliances'
   },
   {
-    icon: '☕',
+    icon: '',
     title: 'Coffee Machines', 
     description: 'Professional coffee machine repair and maintenance services',
     route: '/services/coffee-machines'
   },
   {
-    icon: '🍽️',
+    icon: '',
     title: 'Dishwashers',
     description: 'Dishwasher repair, installation, and maintenance services',
     route: '/services/dishwashers'
   },
   {
-    icon: '👕',
+    icon: '',
     title: 'Washing Machines',
     description: 'Complete washing machine repair and installation services',
     route: '/services/washing-machines'
   },
   {
-    icon: '🔥',
+    icon: '',
     title: 'Hobs',
     description: 'Professional hob repair and installation services',
     route: '/services/hobs'
   },
   {
-    icon: '❄️',
+    icon: '',
     title: 'Air Conditioners',
     description: 'Air conditioning system repair, maintenance, and installation',
     route: '/services/air-conditioners'
   },
   {
-    icon: '⚡',
+    icon: '',
     title: 'All Electrical',
     description: 'Complete electrical appliance repair and installation',
     route: '/services/all-electrical'
   },
   {
-    icon: '🏢',
+    icon: '',
     title: 'Commercial Equipment',
     description: 'Commercial dishwashers, fridges, ice makers, and mixers',
     route: '/services/commercial-equipment'
-  }
-])
-
-const testimonials = ref([
-  {
-    name: 'Jennifer Miller',
-    company: 'Happy Homeowner',
-    text: 'They fixed my washing machine same day! Professional, affordable, and my laundry is back on track.',
-    rating: 5
-  },
-  {
-    name: 'Robert Johnson',
-    company: 'Restaurant Owner',
-    text: 'When our commercial fridge broke down, they came within hours. Saved our business from major losses!',
-    rating: 5
-  },
-  {
-    name: 'Maria Garcia',
-    company: 'Busy Mom',
-    text: 'Installed our new dishwasher perfectly and cleaned up after themselves. Highly recommend!',
-    rating: 5
   }
 ])
 
@@ -100,10 +78,6 @@ const contactForm = ref({
 // Methods
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
-}
-
-const nextTestimonial = () => {
-  currentTestimonial.value = (currentTestimonial.value + 1) % testimonials.value.length
 }
 
 const submitForm = async () => {
@@ -150,11 +124,6 @@ const scrollToSection = (sectionId) => {
   document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' })
   isMenuOpen.value = false
 }
-
-// Auto-rotate testimonials
-onMounted(() => {
-  setInterval(nextTestimonial, 5000)
-})
 </script>
 
 <template>
@@ -168,30 +137,24 @@ onMounted(() => {
       <div class="absolute inset-0 z-10 flex items-center justify-center">
         <div class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center">
           <div class="mx-auto max-w-xl text-center relative">
-            <h1 class="text-3xl font-extrabold sm:text-5xl professional-heading text-white drop-shadow-lg">
+            <h1 class="text-2xl font-extrabold sm:text-4xl lg:text-5xl professional-heading text-white drop-shadow-lg">
+              <span class="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent block text-3xl sm:text-5xl lg:text-6xl mb-2">{{ businessConfig.business.name }}</span>
               Fix Your Appliances
-              <strong class="font-extrabold text-white sm:block"> with Expert Local Service </strong>
+              <strong class="font-extrabold text-white sm:block"> with Our Expert Family Service </strong>
             </h1>
 
-            <div class="mt-8 relative">
-              <p class="sm:text-xl/relaxed text-white opacity-95 drop-shadow-md">
-                Fast, reliable appliance repair and installation services for your home and business. We fix it right the first time!
+            <div class="mt-6 lg:mt-8 relative">
+              <p class="text-lg sm:text-xl lg:text-xl/relaxed text-white opacity-95 drop-shadow-md">
+                Fast, reliable appliance repair and installation services from a trusted family business. We fix it right the first time!
               </p>
             </div>
 
-            <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <div class="mt-6 lg:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <button
-                class="professional-btn professional-btn-primary text-lg px-8 py-4 cursor-pointer shadow-lg"
+                class="professional-btn professional-btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 cursor-pointer shadow-lg w-full sm:w-auto"
                 @click="scrollToSection('services')"
               >
                 Our Services
-              </button>
-
-              <button
-                class="professional-btn professional-btn-secondary text-lg px-8 py-4 cursor-pointer border-white text-blue hover:bg-white hover:text-blue-600 shadow-lg backdrop-blur-sm"
-                @click="scrollToSection('contact')"
-              >
-                Emergency Repair
               </button>
             </div>
           </div>
@@ -209,18 +172,17 @@ onMounted(() => {
           </p>
         </div>
 
-        <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <div v-for="(service, index) in services" :key="service.title" 
                :class="['professional-card', 'floating-card']" 
                :style="{ animationDelay: index * 0.1 + 's' }">
-            <div class="service-icon">{{ service.icon }}</div>
             
-            <h2 class="mt-4 text-xl font-bold text-gray-900 professional-subheading">{{ service.title }}</h2>
-              <p class="mt-1 text-sm text-gray-600 mb-4 professional-text">
+            <h2 class="mt-4 text-lg sm:text-xl font-bold text-gray-900 professional-subheading">{{ service.title }}</h2>
+              <p class="mt-2 text-sm text-gray-600 mb-4 professional-text">
               {{ service.description }}
             </p>
             
-            <router-link :to="service.route" class="mt-4 professional-btn professional-btn-secondary text-sm cursor-pointer block text-center">
+            <router-link :to="service.route" class="mt-auto professional-btn professional-btn-secondary text-sm cursor-pointer block text-center">
               Learn More
             </router-link>
           </div>
@@ -229,132 +191,88 @@ onMounted(() => {
     </section>
 
     <!-- About Section -->
-    <section id="about" class="bg-white py-24 relative overflow-hidden">
-      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
-          <div class="relative h-64 overflow-hidden rounded-lg sm:h-80 lg:order-last lg:h-full">
-            <img 
-              src="/src/assets/images/hero-section/pexels-asphotograpy-213162.jpg" 
-              alt="Professional appliance repair expertise"
-              class="absolute inset-0 h-full w-full object-cover rounded-lg"
-            />
-            <div class="absolute inset-0 bg-black/40 flex items-center justify-center rounded-lg">
-              <div class="text-center text-white">
-                <div class="text-6xl mb-4">🔧</div>
-                <h3 class="text-2xl font-bold professional-subheading text-white">Expertise</h3>
-                <p class="text-lg opacity-90">XX+ Years of Appliance Repair</p>
+    <section id="about" class="bg-gray-50 py-24 relative overflow-hidden">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-24 items-center">
+          <!-- Content Side -->
+          <div class="order-2 lg:order-1">
+            <h2 class="text-4xl font-bold text-gray-900 mb-8 professional-heading">
+              Why Choose Our Family Business?
+            </h2>
+            
+            <p class="text-lg text-gray-600 mb-12 leading-relaxed">
+              We're your trusted local <span class="text-brand font-semibold">family-run appliance repair business</span>, providing fast, reliable, and affordable repair services for all major brands. With generations of hands-on experience, our family personally handles every repair to ensure quality workmanship and customer satisfaction.
+            </p>
+
+            <!-- Feature Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <!-- Family-Run Business -->
+              <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-blue-100 border-2 border-blue-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 group-hover:border-blue-300 transition-colors">
+                    <span class="text-xl font-bold text-brand">F</span>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Family-Run Business</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">Our family has been serving the community for generations with trusted, reliable appliance repair services</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Family Guarantee -->
+              <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-blue-100 border-2 border-blue-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 group-hover:border-blue-300 transition-colors">
+                    <span class="text-xl font-bold text-brand">G</span>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Family Guarantee</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">Our family name is on every repair with comprehensive parts and labor warranty you can trust</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fair Family Pricing -->
+              <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-blue-100 border-2 border-blue-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 group-hover:border-blue-300 transition-colors">
+                    <span class="text-xl font-bold text-brand">P</span>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Fair Family Pricing</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">As a family business, we offer competitive prices and honest value for quality service</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="lg:py-24">
-            <h2 class="text-3xl font-bold sm:text-4xl professional-heading">Why Choose Me?</h2>
-
-            <div class="mt-6">
-              <p class="text-gray-600 professional-text">
-                I'm your trusted local appliance expert, providing fast, reliable, and affordable repair services for all major brands. With years of hands-on experience, I personally handle every repair to ensure quality workmanship.
-              </p>
-            </div>
-
-            <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <div class="professional-card">
-                <div class="flex items-center gap-4">
-                  <span class="feature-icon">
-                    <div class="text-2xl">👨‍🔧</div>
-                  </span>
-                  <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Certified Expert</h3>
-                    <p class="mt-1 text-gray-600 professional-text">I'm fully certified and experienced in repairing all major appliance brands and models</p>
+          <!-- Image Side -->
+          <div class="order-1 lg:order-2">
+            <div class="relative">
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src="/src/assets/images/hero-section/pexels-asphotograpy-213162.jpg" 
+                  alt="Professional appliance repair expertise"
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-transparent blur-xl"></div>
+                <div class="absolute bottom-6 left-6 text-white">
+                  <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20">s
+                    <h3 class="text-xl font-bold mb-1">Our Engineer's Expertise</h3>
+                    <p class="text-sm opacity-90">20+ Years of Appliance Repair</p>
                   </div>
                 </div>
               </div>
-
-              <div class="professional-card">
-                <div class="flex items-center gap-4">
-                  <span class="feature-icon">
-                    <div class="text-2xl">⚡</div>
-                  </span>
-                  <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Same-Day Service</h3>
-                    <p class="mt-1 text-gray-600 professional-text">Most repairs completed the same day with my fully equipped mobile service van</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="professional-card">
-                <div class="flex items-center gap-4">
-                  <span class="feature-icon">
-                    <div class="text-2xl">🛡️</div>
-                  </span>
-                  <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Personal Guarantee</h3>
-                    <p class="mt-1 text-gray-600 professional-text">I personally guarantee all my work with comprehensive parts and labor warranty</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="professional-card">
-                <div class="flex items-center gap-4">
-                  <span class="feature-icon">
-                    <div class="text-2xl">�</div>
-                  </span>
-                  <div>
-                    <h3 class="text-lg font-medium sm:text-xl professional-subheading">Fair Pricing</h3>
-                    <p class="mt-1 text-gray-600 professional-text">No overhead costs means competitive prices and excellent value for quality service</p>
-                  </div>
-                </div>
-              </div>
-            </div>            <!-- Stats -->
-            <div class="mt-12 grid grid-cols-3 gap-4">
-              <div class="stat-card">
-                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">XXX+</dt>
-                <dd class="text-sm text-gray-500">Repairs Completed</dd>
-              </div>
-              <div class="stat-card">
-                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">XX%</dt>
-                <dd class="text-sm text-gray-500">Customer Satisfaction</dd>
-              </div>
-              <div class="stat-card">
-                <dt class="text-3xl font-extrabold text-brand md:text-4xl professional-heading">XX+</dt>
-                <dd class="text-sm text-gray-500">Years Experience</dd>
-              </div>
+              
+              <!-- Decorative elements -->
+              <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-100 rounded-full opacity-70"></div>
+              <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-blue-50 rounded-full opacity-50"></div>
             </div>
           </div>
-        </div>
+        </div>s
       </div>
     </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="section-gray py-24 relative overflow-hidden">
-      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <h2 class="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl professional-heading">
-          What Our Clients Say
-        </h2>
-
-        <div class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
-          <div v-for="(testimonial, index) in testimonials" :key="index" 
-               :class="['testimonial-card', 'floating-card']"
-               :style="{ animationDelay: index * 0.3 + 's' }">
-            <div class="flex items-center gap-4">
-              <div class="feature-icon">
-                <div class="text-2xl">👤</div>
-              </div>
-              <div>
-                <div class="flex justify-center gap-0.5 text-yellow-400 mb-2">
-                  <span v-for="star in testimonial.rating" :key="star" class="text-xl">⭐</span>
-                </div>
-
-                <p class="mt-0.5 text-lg font-medium text-gray-900 professional-subheading">{{ testimonial.name }}</p>
-                <p class="text-sm text-gray-500">{{ testimonial.company }}</p>
-              </div>
-            </div>
-
-            <p class="mt-4 text-gray-700 font-medium professional-text">
-              "{{ testimonial.text }}"
-            </p>
-          </div>
-        </div>
-      </div>    </section>
 
     <!-- Location Section -->
     <section id="location" class="section-gray py-24 relative overflow-hidden">
@@ -373,7 +291,7 @@ onMounted(() => {
             <div class="professional-card p-6">
               <div class="flex items-start space-x-4">
                 <div class="feature-icon">
-                  <div class="text-2xl">📍</div>
+                  <div class="text-2xl font-bold text-brand">L</div>
                 </div>
                 <div>
                   <h3 class="text-xl font-bold professional-subheading mb-2">Our Address</h3>
@@ -397,7 +315,7 @@ onMounted(() => {
                 <!-- Phone -->
                 <div class="flex items-center space-x-4">
                   <div class="feature-icon-small">
-                    <div class="text-lg">📞</div>
+                    <div class="text-lg font-bold text-brand">P</div>
                   </div>
                   <div>
                     <p class="font-medium text-gray-900">Phone</p>
@@ -413,7 +331,7 @@ onMounted(() => {
                 <!-- Email -->
                 <div class="flex items-center space-x-4">
                   <div class="feature-icon-small">
-                    <div class="text-lg">📧</div>
+                    <div class="text-lg font-bold text-brand">E</div>
                   </div>
                   <div>
                     <p class="font-medium text-gray-900">Email</p>
@@ -429,7 +347,7 @@ onMounted(() => {
                 <!-- Website -->
                 <div class="flex items-center space-x-4">
                   <div class="feature-icon-small">
-                    <div class="text-lg">🌐</div>
+                    <div class="text-lg font-bold text-brand">W</div>
                   </div>
                   <div>
                     <p class="font-medium text-gray-900">Website</p>
@@ -447,18 +365,6 @@ onMounted(() => {
                      class="flex justify-between items-center">
                   <span class="capitalize font-medium text-gray-900">{{ day }}</span>
                   <span class="text-gray-600">{{ hours }}</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Service Areas -->
-            <div class="professional-card p-6">
-              <h3 class="text-xl font-bold professional-subheading mb-4">Service Areas</h3>
-              <div class="grid grid-cols-2 gap-2">
-                <div v-for="area in businessConfig.business.serviceAreas" :key="area"
-                     class="flex items-center space-x-2">
-                  <span class="text-green-500">✓</span>
-                  <span class="text-gray-600 text-sm">{{ area }}</span>
                 </div>
               </div>
             </div>
@@ -489,6 +395,18 @@ onMounted(() => {
                 Contact us to schedule an appointment at your location.
               </p>
             </div>
+
+            <!-- Service Areas - Moved below the note -->
+            <div class="professional-card p-6 mt-6">
+              <h3 class="text-xl font-bold professional-subheading mb-4">Service Areas</h3>
+              <div class="grid grid-cols-2 gap-2">
+                <div v-for="area in businessConfig.business.serviceAreas" :key="area"
+                     class="flex items-center space-x-2">
+                  <span class="text-green-500 font-bold">✓</span>
+                  <span class="text-gray-600 text-sm">{{ area }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -504,34 +422,34 @@ onMounted(() => {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           <!-- FAQ Items -->
-          <div class="space-y-6">
-            <div class="professional-card p-6">
-              <h3 class="text-lg font-bold professional-subheading mb-3">How quickly can you repair my appliance?</h3>
-              <p class="text-gray-600 professional-text">Most repairs are completed the same day. I carry common parts in my van and can diagnose issues quickly to get your appliances working again.</p>
+          <div class="space-y-4 lg:space-y-6">
+            <div class="professional-card p-4 lg:p-6">
+              <h3 class="text-base lg:text-lg font-bold professional-subheading mb-3">How quickly can you repair my appliance?</h3>
+              <p class="text-gray-600 professional-text text-sm lg:text-base">Most repairs are completed the same day. Our family team carries common parts in our van and can diagnose issues quickly to get your appliances working again.</p>
             </div>
 
-            <div class="professional-card p-6">
-              <h3 class="text-lg font-bold professional-subheading mb-3">Do you provide warranties on repairs?</h3>
-              <p class="text-gray-600 professional-text">Yes! I provide comprehensive warranties on all parts and labor. You can have confidence that your repair will last.</p>
+            <div class="professional-card p-4 lg:p-6">
+              <h3 class="text-base lg:text-lg font-bold professional-subheading mb-3">Do you provide warranties on repairs?</h3>
+              <p class="text-gray-600 professional-text text-sm lg:text-base">Yes! Our family business provides comprehensive warranties on all parts and labor. You can have confidence that your repair will last.</p>
             </div>
 
-            <div class="professional-card p-6">
-              <h3 class="text-lg font-bold professional-subheading mb-3">What brands do you service?</h3>
-              <p class="text-gray-600 professional-text">I service all major appliance brands including Bosch, Samsung, LG, Whirlpool, Hotpoint, AEG, and many more.</p>
+            <div class="professional-card p-4 lg:p-6">
+              <h3 class="text-base lg:text-lg font-bold professional-subheading mb-3">What brands do you service?</h3>
+              <p class="text-gray-600 professional-text text-sm lg:text-base">Our family services all major appliance brands including Bosch, Samsung, LG, Whirlpool, Hotpoint, AEG, and many more.</p>
             </div>
 
-            <div class="professional-card p-6">
-              <h3 class="text-lg font-bold professional-subheading mb-3">How much does a repair cost?</h3>
-              <p class="text-gray-600 professional-text">I provide upfront pricing before starting any work. No hidden fees or surprises - you'll know the cost before I begin.</p>
+            <div class="professional-card p-4 lg:p-6">
+              <h3 class="text-base lg:text-lg font-bold professional-subheading mb-3">How much does a repair cost?</h3>
+              <p class="text-gray-600 professional-text text-sm lg:text-base">We provide upfront pricing before starting any work. No hidden fees or surprises - you'll know the cost before we begin.</p>
             </div>
           </div>
 
           <!-- Contact Form -->
-          <div class="professional-card p-8">
-            <h3 class="text-xl font-bold professional-subheading mb-6">Still Have Questions?</h3>
-            <p class="text-gray-600 professional-text mb-6">Contact me directly and I'll get back to you quickly with answers.</p>
+          <div class="professional-card p-6 lg:p-8">
+            <h3 class="text-lg lg:text-xl font-bold professional-subheading mb-4 lg:mb-6">Still Have Questions?</h3>
+            <p class="text-gray-600 professional-text mb-4 lg:mb-6 text-sm lg:text-base">Contact our family directly and we'll get back to you quickly with answers.</p>
             
             <form @submit.prevent="submitForm" class="space-y-4">
               <div>
@@ -610,7 +528,7 @@ onMounted(() => {
           <h1 class="text-2xl font-bold sm:text-3xl professional-heading">Need Appliance Service?</h1>
           <div class="mt-6">
             <p class="text-gray-500 professional-text">
-              Ready to fix your appliances? Contact us today for fast, reliable service!
+              Ready to fix your appliances? Contact our family today for fast, reliable service!
             </p>
           </div>
         </div>

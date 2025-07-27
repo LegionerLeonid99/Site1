@@ -30,14 +30,14 @@ export const businessConfig = {
     // 📱 CONTACT INFORMATION - Update with your real business contact details
     contact: {
       phone: "07551656880",                 // ← CHANGE THIS: Your business phone
-      email: "darwinosadcenco@gmail.com",   // ← CHANGE THIS: Your business email
-      website: "www.fixitappliances.co.uk" // ← CHANGE THIS: Your website URL
+      email: "igorosa240@gmail.com",            // ← CHANGE THIS: Your business email
+      website: "www.osaco.co.uk"            // ← CHANGE THIS: Your website URL
     }
   },
 
   // 🏢 BUSINESS DETAILS
   business: {
-    name: "FixIt Appliances",               // ← CHANGE THIS: Your business name
+    name: "Osaco",                          // ← CHANGE THIS: Your business name
     description: "Professional appliance repair services in London and surrounding areas",
     tagline: "Fast, Reliable, Professional",
     
