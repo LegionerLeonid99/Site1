@@ -258,7 +258,7 @@ const scrollToSection = (sectionId) => {
                 />
                 <div class="absolute inset-0 bg-gradient-to-tr from-black/50 via-transparent to-transparent blur-xl"></div>
                 <div class="absolute bottom-6 left-6 text-white">
-                  <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20">s
+                  <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20">
                     <h3 class="text-xl font-bold mb-1">Our Engineer's Expertise</h3>
                     <p class="text-sm opacity-90">20+ Years of Appliance Repair</p>
                   </div>
@@ -270,7 +270,7 @@ const scrollToSection = (sectionId) => {
               <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-blue-50 rounded-full opacity-50"></div>
             </div>
           </div>
-        </div>s
+        </div>
       </div>
     </section>
 

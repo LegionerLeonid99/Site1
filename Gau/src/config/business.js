@@ -29,7 +29,7 @@ export const businessConfig = {
     
     // 📱 CONTACT INFORMATION - Update with your real business contact details
     contact: {
-      phone: "07551656880",                 // ← CHANGE THIS: Your business phone
+      phone: "07398933824",                 // ← CHANGE THIS: Your business phone
       email: "igorosa240@gmail.com",            // ← CHANGE THIS: Your business email
       website: "www.osaco.co.uk"            // ← CHANGE THIS: Your website URL
     }

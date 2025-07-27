@@ -224,7 +224,7 @@ const scrollToSection = (sectionId) => {
               </ul>
             </div>
 
-            <!-- Business Hours & Service Areas -->
+            <!-- Business Hours-->
             <div class="col-span-1 animate-fadeInUp" style="animation-delay: 0.3s;">
               <p class="font-medium text-white professional-subheading mb-4 hover:scale-105 transform transition-all duration-300">Business Hours</p>
               
@@ -241,14 +241,6 @@ const scrollToSection = (sectionId) => {
                   <span class="text-gray-400">Sunday</span>
                   <span class="text-gray-300">Closed</span>
                 </div>
-              </div>
-
-              <p class="font-medium text-white professional-subheading mb-4 mt-8 hover:scale-105 transform transition-all duration-300">Service Areas</p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                <span v-for="area in businessConfig.business.serviceAreas.slice(0, 3)" :key="area"
-                      class="text-xs px-2 py-1 bg-gray-700 text-gray-300 rounded">
-                  {{ area }}
-                </span>
               </div>
             </div>
           </div>
