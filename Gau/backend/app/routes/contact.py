@@ -66,6 +66,35 @@ def general_contact():
             'message': 'An error occurred. Please try again.'
         }), 500
 
+@contact_bp.route('/contact/enquiry', methods=['POST'])
+def unified_service_contact():
+    """Unified endpoint replacing multiple specialised service endpoints.
+    Accepts base fields: name, email, service, message (message optional if issue provided)
+    Optional fields: phone, brand, model, issue, urgency, businessType, appliance, machineType, dishwasherType, washerType, equipmentType
+    """
+    try:
+        data = request.get_json() or {}
+
+        required_fields = ['name', 'email', 'service']
+        missing_fields = validate_required_fields(data, required_fields)
+        if missing_fields:
+            return jsonify({'success': False, 'message': f'Missing required fields: {", ".join(missing_fields)}'}), 400
+
+        if not validate_email(data['email']):
+            return jsonify({'success': False, 'message': 'Invalid email format'}), 400
+
+        # Allow message or issue at least
+        if not (data.get('message', '').strip() or data.get('issue', '').strip()):
+            return jsonify({'success': False, 'message': 'Please provide a message or issue description'}), 400
+
+        result = email_service.send_unified_service_email(data)
+        if result['success']:
+            return jsonify({'success': True, 'message': 'Thank you! We have received your enquiry.'}), 200
+        return jsonify({'success': False, 'message': 'Failed to send message. Please try again.'}), 500
+    except Exception as e:
+        current_app.logger.error(f'Unified contact form error: {str(e)}')
+        return jsonify({'success': False, 'message': 'An error occurred. Please try again.'}), 500
+
 @contact_bp.route('/contact/appliances', methods=['POST'])
 def appliance_contact():
     try:

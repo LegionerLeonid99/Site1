@@ -23,6 +23,7 @@ def verify_routes():
     """Verify all email routes are accessible (without sending data)."""
     routes = [
         "/contact",
+    "/contact/enquiry",
         "/contact/appliances", 
         "/contact/coffee-machines",
         "/contact/dishwashers",
@@ -50,6 +51,8 @@ def show_route_info():
     print("=" * 50)
     print("General Contact:")
     print("  POST /api/contact")
+    print("Unified Service Enquiry:")
+    print("  POST /api/contact/enquiry")
     print("  Fields: name, email, service, message")
     print()
     print("Service-Specific Contact:")

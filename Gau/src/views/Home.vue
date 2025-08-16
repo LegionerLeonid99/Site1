@@ -87,7 +87,7 @@ const submitForm = async () => {
   button.textContent = 'Sending...'
   
   try {
-    const response = await fetch('http://localhost:5000/api/contact', {
+  const response = await fetch('http://localhost:5000/api/contact/enquiry', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -485,14 +485,14 @@ const scrollToSection = (sectionId) => {
                   class="professional-input"
                 >
                   <option value="">Select a service...</option>
-                  <option value="appliances">General Appliances</option>
-                  <option value="coffee-machines">Coffee Machines</option>
-                  <option value="dishwashers">Dishwashers</option>
-                  <option value="washing-machines">Washing Machines</option>
-                  <option value="hobs">Hobs</option>
-                  <option value="air-conditioners">Air Conditioners</option>
-                  <option value="all-electrical">All Electrical</option>
-                  <option value="commercial">Commercial Equipment</option>
+                  <option value="Appliance Repair">Appliance Repair</option>
+                  <option value="Coffee Machines">Coffee Machines</option>
+                  <option value="Dishwashers">Dishwashers</option>
+                  <option value="Washing Machines">Washing Machines</option>
+                  <option value="Hobs">Hobs</option>
+                  <option value="Air Conditioners">Air Conditioners</option>
+                  <option value="All Electrical">All Electrical</option>
+                  <option value="Commercial Equipment">Commercial Equipment</option>
                 </select>
               </div>
 
@@ -572,14 +572,14 @@ const scrollToSection = (sectionId) => {
                 class="professional-input"
               >
                 <option value="">Select a service...</option>
-                <option value="appliances">General Appliances</option>
-                <option value="coffee-machines">Coffee Machines</option>
-                <option value="dishwashers">Dishwashers</option>
-                <option value="washing-machines">Washing Machines</option>
-                <option value="hobs">Hobs</option>
-                <option value="air-conditioners">Air Conditioners</option>
-                <option value="all-electrical">All Electrical</option>
-                <option value="commercial">Commercial Equipment</option>
+                <option value="Appliance Repair">Appliance Repair</option>
+                <option value="Coffee Machines">Coffee Machines</option>
+                <option value="Dishwashers">Dishwashers</option>
+                <option value="Washing Machines">Washing Machines</option>
+                <option value="Hobs">Hobs</option>
+                <option value="Air Conditioners">Air Conditioners</option>
+                <option value="All Electrical">All Electrical</option>
+                <option value="Commercial Equipment">Commercial Equipment</option>
               </select>
             </div>
 

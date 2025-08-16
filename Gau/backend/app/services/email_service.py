@@ -5,50 +5,124 @@ from datetime import datetime
 
 class EmailService:
     def send_contact_email(self, name, email, service, message):
+                try:
+                        business_msg = Message(
+                                subject=f'Osaco Website Contact - {service}',
+                                sender=current_app.config['MAIL_USERNAME'],
+                                recipients=[current_app.config['BUSINESS_EMAIL']]
+                        )
+
+                        business_msg.html = f"""
+                        <h2>New Website Enquiry (Osaco)</h2>
+                        <p><strong>From:</strong> {name} &lt;{email}&gt;</p>
+                        <p><strong>Service Selected:</strong> {service}</p>
+                        <hr style='margin:16px 0;'>
+                        <p style='margin:0 0 4px 0;'><strong>Message:</strong></p>
+                        <p style='white-space:pre-line;margin-top:4px'>{message}</p>
+                        <hr style='margin:16px 0;'>
+                        <p style='font-size:12px;color:#555'>Submitted {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (server time)</p>
+                        """
+
+                        customer_msg = Message(
+                                subject=f'Osaco – We received your {service} enquiry',
+                                sender=current_app.config['MAIL_USERNAME'],
+                                recipients=[email]
+                        )
+
+                        customer_msg.html = f"""
+                        <h2 style='margin:0 0 12px 0;'>Thank you – your enquiry is with our team</h2>
+                        <p style='margin:0 0 12px 0;'>Hi {name},</p>
+                        <p style='margin:0 0 12px 0;'>We’ve received your request regarding <strong>{service}</strong>. An Osaco technician will review the details and contact you (usually within 1 business hour during opening times).</p>
+                        <p style='margin:0 0 8px 0;'><strong>Your message:</strong></p>
+                        <blockquote style='margin:0 0 16px 0;padding:12px 16px;background:#f5f7fa;border-left:4px solid #2563eb;border-radius:4px;'>
+                            {message}
+                        </blockquote>
+                        <p style='margin:0 0 12px 0;'><strong>What happens next?</strong></p>
+                        <ol style='margin:0 0 16px 20px;padding:0;'>
+                            <li>We confirm brand / model details if needed.</li>
+                            <li>We provide an indicative call‑out / repair approach.</li>
+                            <li>You choose a convenient visit window.</li>
+                        </ol>
+                        <p style='margin:0 0 16px 0;'>If anything is urgent you can call us directly on <strong>{current_app.config["BUSINESS_PHONE"]}</strong>.</p>
+                        <p style='margin:0 0 4px 0;font-size:12px;color:#555'>Business Hours: Mon–Fri 8:00–18:00 · Sat 9:00–16:00</p>
+                        <p style='margin:0 0 24px 0;font-size:12px;color:#555'>Service Areas: Central, North, South, East, West & Greater London</p>
+                        <p style='margin:0;'>Kind regards,<br><strong>Osaco Appliance Repair Team</strong></p>
+                        """
+
+                        mail.send(business_msg)
+                        mail.send(customer_msg)
+                        return {'success': True}
+                except Exception as e:
+                        current_app.logger.error(f'Email sending error: {str(e)}')
+                        return {'success': False, 'error': str(e)}
+
+    # NEW UNIFIED METHOD
+    def send_unified_service_email(self, data):
+        """Generic service enquiry email builder to replace multiple specialised variants.
+
+        Expected base fields: name, email, service, message (message optional if other detail fields present)
+        Optional recognised detail fields (will be included automatically if present):
+            phone, brand, model, issue, urgency, businessType,
+            appliance, machineType, dishwasherType, washerType, equipmentType
+        """
         try:
-            # Email to business
+            # Normalise message
+            base_message = data.get('message') or 'No additional details provided'
+
+            # Collect dynamic detail rows excluding base identifiers
+            ignore_keys = {'name', 'email', 'service', 'message'}
+            detail_order = [
+                'phone', 'brand', 'model', 'issue', 'urgency', 'businessType',
+                'appliance', 'machineType', 'dishwasherType', 'washerType', 'equipmentType'
+            ]
+            details_html = ''
+            for key in detail_order:
+                if key in data and data[key]:
+                    pretty_key = key.replace('Type', ' Type').replace('machine', 'Machine').replace('washer', 'Washer')
+                    details_html += f"<p><strong>{pretty_key.capitalize()}:</strong> {data[key]}</p>"
+
             business_msg = Message(
-                subject=f'New Contact Form Submission - {service}',
+                subject=f"Osaco Enquiry - {data.get('service', 'General')}",
                 sender=current_app.config['MAIL_USERNAME'],
                 recipients=[current_app.config['BUSINESS_EMAIL']]
             )
-            
+
             business_msg.html = f"""
-            <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> {name}</p>
-            <p><strong>Email:</strong> {email}</p>
-            <p><strong>Service:</strong> {service}</p>
-            <p><strong>Message:</strong></p>
-            <p>{message}</p>
-            <p><strong>Submitted:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
+            <h2 style='margin:0 0 12px 0;'>New Website Service Enquiry (Osaco)</h2>
+            <p style='margin:0 0 4px 0;'><strong>Client:</strong> {data.get('name')} &lt;{data.get('email')}&gt;</p>
+            <p style='margin:0 0 12px 0;'><strong>Requested Service:</strong> {data.get('service')}</p>
+            {details_html if details_html else ''}
+            <hr style='margin:16px 0;'>
+            <p style='margin:0 0 4px 0;'><strong>Message / Details:</strong></p>
+            <div style='background:#f5f7fa;padding:12px 16px;border-radius:4px;white-space:pre-line;'>{base_message}</div>
+            <p style='margin:16px 0 0 0;font-size:12px;color:#555;'>Submitted {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
             """
-            
-            # Confirmation email to customer
+
             customer_msg = Message(
-                subject=f'Thank you for contacting {current_app.config["BUSINESS_NAME"]}',
+                subject=f"Osaco – {data.get('service')} enquiry received",
                 sender=current_app.config['MAIL_USERNAME'],
-                recipients=[email]
+                recipients=[data.get('email')]
             )
-            
+
             customer_msg.html = f"""
-            <h2>Thank you for your inquiry!</h2>
-            <p>Dear {name},</p>
-            <p>Thank you for contacting {current_app.config["BUSINESS_NAME"]}. We have received your message about <strong>{service}</strong> and will get back to you within 24 hours.</p>
-            <p><strong>Your message:</strong></p>
-            <p>{message}</p>
-            <br>
-            <p>Best regards,<br>
-            {current_app.config["BUSINESS_NAME"]} Team<br>
-            {current_app.config["BUSINESS_PHONE"]}</p>
+            <h2 style='margin:0 0 12px 0;'>We’ve got your request</h2>
+            <p style='margin:0 0 12px 0;'>Hi {data.get('name')}, thanks for reaching out about <strong>{data.get('service')}</strong>.</p>
+            <p style='margin:0 0 12px 0;'>An Osaco engineer will review the information you supplied and contact you shortly to arrange the next step.</p>
+            {('<div style=\'margin:0 0 16px 0;\'><strong>Details Provided:</strong>' + details_html + '</div>') if details_html else ''}
+            <p style='margin:0 0 4px 0;'><strong>Your message:</strong></p>
+            <blockquote style='margin:0 0 16px 0;padding:12px 16px;background:#f5f7fa;border-left:4px solid #2563eb;border-radius:4px;white-space:pre-line;'>{base_message}</blockquote>
+            <p style='margin:0 0 12px 0;'><strong>Typical response window:</strong> within 1 business hour (Mon–Fri daytime).</p>
+            <p style='margin:0 0 12px 0;'>Need something urgent? Call us on <strong>{current_app.config['BUSINESS_PHONE']}</strong>.</p>
+            <p style='margin:0 0 4px 0;font-size:12px;color:#555'>Service Areas: Central, North, South, East, West & Greater London</p>
+            <p style='margin:0 0 0 0;'>Kind regards,<br><strong>Osaco Appliance Repair Team</strong></p>
             """
-            
+
             mail.send(business_msg)
             mail.send(customer_msg)
-            
+
             return {'success': True}
-            
         except Exception as e:
-            current_app.logger.error(f'Email sending error: {str(e)}')
+            current_app.logger.error(f'Unified service email error: {str(e)}')
             return {'success': False, 'error': str(e)}
     
     def send_appliance_service_email(self, data):

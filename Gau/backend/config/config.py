@@ -20,6 +20,8 @@ class Config:
     
     # Frontend URL for CORS
     FRONTEND_URL = os.environ.get('FRONTEND_URL') or 'http://localhost:5173'
+    # Comma separated list of allowed origins (include both localhost & 127.0.0.1 by default)
+    ALLOWED_ORIGINS = [o.strip() for o in (os.environ.get('ALLOWED_ORIGINS') or 'http://localhost:5173,http://127.0.0.1:5173').split(',') if o.strip()]
     
     # API settings
     API_RATE_LIMIT = int(os.environ.get('API_RATE_LIMIT') or 100)
