@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Navigate to project directory
+cd Gau
+
 # Build frontend
 echo "Building frontend..."
 npm install
