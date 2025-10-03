@@ -2,10 +2,10 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm install && npm run build && mkdir -p Gau/backend/static && cp -r dist/* Gau/backend/static/ && pip install -r Gau/backend/requirements.txt && pip install gunicorn"
+    "buildCommand": "npm install && npm run build && mkdir -p backend_temp/static && cp -r dist/* backend_temp/static/ && pip install -r backend_temp/requirements.txt && pip install gunicorn"
   },
   "deploy": {
-    "startCommand": "sh -c 'if [ -d Gau/backend ]; then cd Gau/backend; elif [ -d backend ]; then cd backend; else echo \"ERROR: backend directory not found\" && ls -la && exit 1; fi && gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app'",
+    "startCommand": "sh -c 'cd backend_temp && gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app'",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }

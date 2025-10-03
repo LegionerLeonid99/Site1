@@ -1,0 +1,31 @@
+# Robots.txt for FixIt Appliances
+# This file tells search engines which pages they can crawl
+
+# Allow all search engines to crawl everything
+User-agent: *
+Allow: /
+
+# Block access to admin/dev files
+Disallow: /admin/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /dist/
+Disallow: /.env
+Disallow: /package.json
+Disallow: /vite.config.js
+
+# Block access to temporary/testing files
+Disallow: /*test*
+Disallow: /*temp*
+Disallow: /*backup*
+
+# Allow important files
+Allow: /sitemap.xml
+Allow: /favicon.ico
+
+# Sitemap location (update this URL to your actual domain)
+Sitemap: https://www.fixitappliances.co.uk/sitemap.xml
+
+# Additional rules for better SEO
+# Crawl-delay: 1
