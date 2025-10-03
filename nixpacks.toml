@@ -4,8 +4,7 @@ nixPkgs = ["nodejs-18_x", "python310"]
 [phases.install]
 cmds = [
     "npm install",
-    "cp -r Gau/backend backend",
-    "pip install -r backend/requirements.txt",
+    "pip install -r Gau/backend/requirements.txt",
     "pip install gunicorn"
 ]
 
@@ -13,4 +12,4 @@ cmds = [
 cmds = ["npm run build"]
 
 [start]
-cmd = "cp -r dist backend/static && gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - --chdir backend app:app"
+cmd = "sh -c 'cp -r dist Gau/backend/static && cd Gau/backend && gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app'"
