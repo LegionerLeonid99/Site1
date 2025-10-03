@@ -2,7 +2,7 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm install && npm run build && pip install -r Gau/backend/requirements.txt && pip install gunicorn"
+    "buildCommand": "npm install && npm run build && mkdir -p Gau/backend/static && cp -r dist/* Gau/backend/static/ && pip install -r Gau/backend/requirements.txt && pip install gunicorn"
   },
   "deploy": {
     "startCommand": "sh -c 'cd Gau/backend && gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app'",

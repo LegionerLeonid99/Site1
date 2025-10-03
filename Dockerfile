@@ -37,8 +37,7 @@ RUN pip install gunicorn
 # Copy backend code
 COPY Gau/backend ./backend
 
-# Copy built frontend from builder stage
-COPY --from=frontend-builder /app/frontend/dist ./backend/static
+# Copy built frontend frer /app/frontend/dist ./backend/static
 
 # Set working directory to backend
 WORKDIR /app/backend
