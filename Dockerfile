@@ -12,8 +12,8 @@ COPY tailwind.config.js ./
 COPY index.html ./
 RUN npm install
 
-COPY Gau/src ./src
-COPY Gau/public ./public
+COPY src ./src
+COPY public ./public
 RUN npm run build
 
 # Python stage
@@ -28,19 +28,20 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy backend requirements and install Python dependencies
-COPY Gau/backend/requirements.txt ./backend/
-RUN pip install --no-cache-dir -r backend/requirements.txt
+COPY backend_temp/requirements.txt ./backend_temp/
+RUN pip install --no-cache-dir -r backend_temp/requirements.txt
 
 # Install gunicorn for production
 RUN pip install gunicorn
 
 # Copy backend code
-COPY Gau/backend ./backend
+COPY backend_temp ./backend_temp
 
-# Copy built frontend frer /app/frontend/dist ./backend/static
+# Copy built frontend from builder stage
+COPY --from=frontend-builder /app/frontend/dist ./backend_temp/static
 
 # Set working directory to backend
-WORKDIR /app/backend
+WORKDIR /app/backend_temp
 
 # Set environment variables
 ENV FLASK_APP=app.py
