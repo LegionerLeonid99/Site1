@@ -12,4 +12,4 @@ cmds = [
 cmds = ["npm run build", "mkdir -p Gau/backend/static", "cp -r dist/* Gau/backend/static/"]
 
 [start]
-cmd = "sh -c 'cd Gau/backend && gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app'"
+cmd = "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - --pythonpath Gau/backend Gau.backend.app:app"
