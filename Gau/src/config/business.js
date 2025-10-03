@@ -29,15 +29,15 @@ export const businessConfig = {
     
     // 📱 CONTACT INFORMATION - Update with your real business contact details
     contact: {
-      phone: "07398933824",                 // ← CHANGE THIS: Your business phone
-      email: "igorosa240@gmail.com",            // ← CHANGE THIS: Your business email
-      website: "www.osaco.co.uk"            // ← CHANGE THIS: Your website URL
+      phone: "02030261006",                 // ← CHANGE THIS: Your business phone
+      email: "otechhomeservices@gmail.com",            // ← CHANGE THIS: Your business email
+      website: "www.o-techhomeservices.co.uk"            // ← CHANGE THIS: Your website URL
     }
   },
 
   // 🏢 BUSINESS DETAILS
   business: {
-    name: "Osaco",                          // ← CHANGE THIS: Your business name
+    name: "O-TECH HOME SERVICES LTD",                          // ← CHANGE THIS: Your business name
     description: "Professional appliance repair services in London and surrounding areas",
     tagline: "Fast, Reliable, Professional",
     

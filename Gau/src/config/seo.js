@@ -10,8 +10,8 @@
 export const seoConfig = {
   // 🎯 BUSINESS SEO INFORMATION
   business: {
-    name: "Osaco",                              // ← CHANGE THIS: Your business name
-    legalName: "Osaco Ltd",                     // ← CHANGE THIS: Legal business name
+    name: "O-TECH HOME SERVICES",                              // ← CHANGE THIS: Your business name
+    legalName: "O-TECH HOME SERVICES LTD",                     // ← CHANGE THIS: Legal business name
     description: "Expert appliance repair services for coffee machines, dishwashers, washing machines, hobs, air conditioners, and all electrical appliances. Fast, reliable, and affordable.",
     
     // 📍 LOCAL SEO - Critical for local businesses
@@ -30,8 +30,8 @@ export const seoConfig = {
     // 📞 CONTACT SEO
     contact: {
       phone: "+44 7551 656880",                // ← CHANGE THIS: Your phone (with country code)
-      email: "info@osaco.co.uk",               // ← CHANGE THIS: Your business email
-      website: "https://www.osaco.co.uk"       // ← CHANGE THIS: Your website URL
+      email: "otechhomeservices@gmail.com",               // ← CHANGE THIS: Your business email
+      website: "https://www.o-techhomeservices.co.uk"       // ← CHANGE THIS: Your website URL
     },
     
     // 🕒 OPERATING HOURS (for Google My Business integration)
@@ -78,13 +78,13 @@ export const seoConfig = {
   // 📄 PAGE-SPECIFIC SEO
   pages: {
     home: {
-      title: "Osaco - Expert Family Appliance Repair Service London",
+      title: "O-TECH HOME SERVICES - Expert Family Appliance Repair Service London",
       description: "Professional appliance repair services in London. We fix washing machines, dishwashers, coffee machines, hobs & more. Trusted family business. Call now!",
       keywords: "appliance repair London, washing machine repair, dishwasher repair, coffee machine repair, family business"
     },
     
     appliances: {
-      title: "General Appliance Repair London | Osaco",
+      title: "General Appliance Repair London | O-TECH HOME SERVICES",
       description: "Expert repair for all household appliances in London. Certified technicians, same-day service, warranty included. Book your appliance repair today!",
       keywords: "appliance repair, household appliances, certified technicians, warranty repair"
     },
@@ -96,7 +96,7 @@ export const seoConfig = {
     },
     
     dishwashers: {
-      title: "Dishwasher Repair London | All Brands Serviced | Osaco",
+      title: "Dishwasher Repair London | All Brands Serviced | O-TECH HOME SERVICES",
       description: "Expert dishwasher repair in London. We fix all brands: Bosch, Miele, AEG, Hotpoint. Not draining? Not cleaning? We'll fix it fast!",
       keywords: "dishwasher repair, Bosch dishwasher, Miele service, dishwasher not draining"
     },
@@ -108,7 +108,7 @@ export const seoConfig = {
     },
     
     hobs: {
-      title: "Hob Repair London | Gas, Electric & Induction Specialists | Osaco",
+      title: "Hob Repair London | Gas, Electric & Induction Specialists | O-TECH HOME SERVICES",
       description: "Expert hob repair in London. Gas, electric, and induction hobs serviced. All brands: Bosch, AEG, Neff. Not heating? Call our certified engineers!",
       keywords: "hob repair London, gas hob repair, electric hob repair, induction hob service"
     },
@@ -132,7 +132,7 @@ export const seoConfig = {
     },
     
     faq: {
-      title: "Appliance Repair FAQ | Common Questions Answered | Osaco",
+      title: "Appliance Repair FAQ | Common Questions Answered | O-TECH HOME SERVICES",
       description: "Frequently asked questions about appliance repair in London. Get answers about costs, warranties, service times, and common appliance problems.",
       keywords: "appliance repair FAQ, repair costs, appliance warranty, common appliance problems"
     }
@@ -143,13 +143,13 @@ export const seoConfig = {
     organization: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "@id": "https://www.osaco.co.uk/#organization",
-      name: "Osaco",
-      legalName: "Osaco Ltd",
+      "@id": "https://www.o-techhomeservices.co.uk/#organization",
+      name: "O-TECH HOME SERVICES",
+      legalName: "O-TECH HOME SERVICES LTD",
       description: "Professional appliance repair services",
-      url: "https://www.osaco.co.uk",
-      telephone: "+44-7551-656880",
-      email: "info@osaco.co.uk",
+      url: "https://www.o-techhomeservices.co.uk",
+      telephone: "+447398933824",
+      email: "otechhomeservices@gmail.com",
       
       address: {
         "@type": "PostalAddress",
@@ -228,33 +228,33 @@ export const seoConfig = {
   social: {
     // Open Graph for Facebook, LinkedIn, etc.
     og: {
-      siteName: "Osaco",
+      siteName: "O-TECH HOME SERVICES",
       type: "website",
       locale: "en_GB",
       image: "/images/og-image.jpg",           // ← ADD THIS: Create a 1200x630px image
-      imageAlt: "Osaco - Professional Appliance Repair London"
+      imageAlt: "O-TECH HOME SERVICES - Professional Appliance Repair London"
     },
     
     // Twitter/X Cards
     twitter: {
       card: "summary_large_image",
-      site: "@osaco",               // ← CHANGE THIS: Your Twitter handle
-      creator: "@osaco"
+      site: "@otechhomeservices",               // ← CHANGE THIS: Your Twitter handle
+      creator: "@otechhomeservices"
     },
     
     // Social Media Profiles (helps with entity recognition)
     profiles: [
-      "https://www.facebook.com/osaco",    // ← ADD THIS: Your Facebook page
-      "https://www.twitter.com/osaco",     // ← ADD THIS: Your Twitter profile
-      "https://www.linkedin.com/company/osaco", // ← ADD THIS: Your LinkedIn
-      "https://www.instagram.com/osaco"    // ← ADD THIS: Your Instagram
+      "https://www.facebook.com/otechhomeservices",    // ← ADD THIS: Your Facebook page
+      "https://www.twitter.com/otechhomeservices",     // ← ADD THIS: Your Twitter profile
+      "https://www.linkedin.com/company/otechhomeservices", // ← ADD THIS: Your LinkedIn
+      "https://www.instagram.com/otechhomeservices"    // ← ADD THIS: Your Instagram
     ]
   },
 
   // 🎯 TECHNICAL SEO
   technical: {
     // Canonical URLs (prevents duplicate content)
-    canonical: "https://www.osaco.co.uk",
+    canonical: "https://www.o-techhomeservices.co.uk",
     
     // Robots meta
     robots: "index, follow",

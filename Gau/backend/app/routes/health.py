@@ -6,6 +6,6 @@ health_bp = Blueprint('health', __name__)
 def health_check():
     return jsonify({
         'status': 'healthy',
-        'message': 'FixIt Appliances API is running',
+        'message': 'O-TECH HOME SERVICES API is running',
         'version': '1.0.0'
     }), 200

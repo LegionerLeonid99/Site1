@@ -357,7 +357,7 @@ const submitForm = () => {
                   id="phone"
                   required
                   class="professional-input"
-                  placeholder="(555) 123-4567"
+                  placeholder="07XXX XXXXXX"
                 />
               </div>
 

@@ -24,7 +24,7 @@ def general_contact():
         data = request.get_json()
         
         # Validate required fields
-        required_fields = ['name', 'email', 'service', 'message']
+        required_fields = ['name', 'email', 'phone', 'service', 'message']
         missing_fields = validate_required_fields(data, required_fields)
         
         if missing_fields:
@@ -44,6 +44,7 @@ def general_contact():
         result = email_service.send_contact_email(
             name=data['name'],
             email=data['email'],
+            phone=data.get('phone', ''),
             service=data['service'],
             message=data['message']
         )

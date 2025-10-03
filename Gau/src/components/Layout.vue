@@ -25,10 +25,10 @@ const scrollToSection = (sectionId) => {
   <div class="app">
     <!-- Navigation - Professional Header -->
     <header class="professional-nav bg-white shadow-sm fixed w-full top-0 z-50">
-      <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-between">
-          <div class="md:flex md:items-center md:gap-12">
-            <router-link to="/" class="block text-brand font-bold text-2xl bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 animate-pulse">
+      <div class="mx-auto max-w-screen-xl px-3 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between gap-2">
+          <div class="md:flex md:items-center md:gap-12 flex-shrink-0">
+            <router-link to="/" class="block text-brand font-bold text-sm sm:text-base md:text-lg lg:text-xl bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 animate-pulse whitespace-nowrap">
               {{ businessConfig.business.name }}
             </router-link>
           </div>
@@ -83,11 +83,11 @@ const scrollToSection = (sectionId) => {
             </nav>
           </div>
 
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 sm:gap-4">
             <div class="sm:flex sm:gap-4">
               <a
                 href="/#contact"
-                class="professional-btn professional-btn-primary cursor-pointer hover:scale-105 transform transition-all duration-300 hover:shadow-lg"
+                class="professional-btn professional-btn-primary cursor-pointer hover:scale-105 transform transition-all duration-300 hover:shadow-lg text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-3"
               >
                 Get Service
               </a>
@@ -158,7 +158,7 @@ const scrollToSection = (sectionId) => {
             <!-- Company Information -->
             <div class="col-span-1 lg:col-span-2 animate-fadeInUp" style="animation-delay: 0.1s;">
               <div class="flex items-center space-x-3 mb-6">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-2 rounded-lg font-bold text-lg">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg font-bold text-sm sm:text-base md:text-lg">
                   {{ businessConfig.business.name }}
                 </div>
               </div>

@@ -14,9 +14,9 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     
     # Business settings
-    BUSINESS_EMAIL = os.environ.get('BUSINESS_EMAIL') or 'info@fixitappliances.com'
-    BUSINESS_NAME = os.environ.get('BUSINESS_NAME') or 'FixIt Appliances'
-    BUSINESS_PHONE = os.environ.get('BUSINESS_PHONE') or '(555) 123-4567'
+    BUSINESS_EMAIL = os.environ.get('BUSINESS_EMAIL') or 'otechhomeservices@gmail.com'
+    BUSINESS_NAME = os.environ.get('BUSINESS_NAME') or 'O-TECH HOME SERVICES LTD'
+    BUSINESS_PHONE = os.environ.get('BUSINESS_PHONE') or '02030261006'
     
     # Frontend URL for CORS
     FRONTEND_URL = os.environ.get('FRONTEND_URL') or 'http://localhost:5173'

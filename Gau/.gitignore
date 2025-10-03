@@ -275,3 +275,44 @@ docs/build/
 *.njsproj
 *.sln
 *.sw?
+
+# ===========================
+# PROJECT DOCUMENTATION (Optional - Remove if you want to keep these)
+# ===========================
+
+# Internal documentation files (uncomment to ignore)
+# CONFIGURATION_GUIDE.md
+# CONTENT_MANAGEMENT.md
+# DEPLOYMENT_ASSESSMENT.md
+# DEPLOYMENT_GUIDE.md
+# DOCUMENTATION.md
+# QUICK_REFERENCE.md
+# SEO_ACTION_PLAN.md
+# STYLES_README.md
+# TROUBLESHOOTING.md
+# backend/EMAIL_SETUP.md
+# backend/README.md
+
+# ===========================
+# BUILD & GENERATED FILES
+# ===========================
+
+# Generated sitemap
+generate-sitemap.js
+
+# Backup files
+*.backup
+*_backup.*
+*_old.*
+email_service_backup.py
+
+# Start scripts (if you want to exclude them)
+# backend/start.bat
+# backend/start.ps1
+
+# Test and verification scripts (uncomment to ignore)
+backend/test_api.py
+backend/verify_routes.py
+
+# Package lock files (already covered above but being explicit)
+package-lock.json

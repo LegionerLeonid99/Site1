@@ -33,11 +33,11 @@ To enable real email functionality, update these values in `.env`:
 MAIL_SERVER=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USE_TLS=True
-MAIL_USERNAME=your-business-email@gmail.com
+MAIL_USERNAME=otechhomeservices@gmail.com
 MAIL_PASSWORD=your-app-specific-password
 
 # Business contact info
-BUSINESS_EMAIL=your-business-email@gmail.com
+BUSINESS_EMAIL=otechhomeservices@gmail.com
 BUSINESS_NAME=Your Business Name
 BUSINESS_PHONE=Your Phone Number
 ```

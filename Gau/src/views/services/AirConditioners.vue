@@ -246,7 +246,7 @@ const submitForm = async () => {
                   id="phone"
                   required
                   class="professional-input"
-                  placeholder="Your phone number..."
+                  placeholder="07XXX XXXXXX"
                 />
               </div>
             </div>

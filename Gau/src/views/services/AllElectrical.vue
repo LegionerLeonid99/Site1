@@ -136,7 +136,7 @@ const submitForm = () => {
                 <input v-model="contactForm.email" type="email" required class="professional-input" placeholder="Email" />
               </div>
               
-              <input v-model="contactForm.phone" type="tel" required class="professional-input" placeholder="Phone Number" />
+              <input v-model="contactForm.phone" type="tel" required class="professional-input" placeholder="07XXX XXXXXX" />
               
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <select v-model="contactForm.applianceType" required class="professional-input">

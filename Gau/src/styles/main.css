@@ -45,6 +45,14 @@
     gap: 8px;
   }
 
+  @media (max-width: 640px) {
+    .professional-btn {
+      padding: 8px 16px;
+      font-size: 12px;
+      gap: 4px;
+    }
+  }
+
   .professional-btn-primary {
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
     color: white;
