@@ -40,8 +40,11 @@ COPY Gau/backend ./backend
 # Copy built frontend from builder stage
 COPY --from=frontend-builder /app/frontend/dist ./backend/static
 
+# Set working directory to backend
+WORKDIR /app/backend
+
 # Set environment variables
-ENV FLASK_APP=backend/app.py
+ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
 
@@ -53,4 +56,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:5000/api/health')"
 
 # Run the application with gunicorn
-CMD cd backend && gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "--workers", "2", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "app:app"]
