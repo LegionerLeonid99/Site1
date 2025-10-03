@@ -12,4 +12,4 @@ cmds = [
 cmds = ["npm run build", "mkdir -p backend_temp/static", "cp -r dist/* backend_temp/static/"]
 
 [start]
-cmd = "sh -c 'gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app'"
+cmd = "sh -c 'FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug app:app'"
