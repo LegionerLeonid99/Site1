@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_cors import CORS
 from flask_mail import Mail
 from config.config import config
@@ -7,7 +7,7 @@ import os
 mail = Mail()
 
 def create_app(config_name='default'):
-  app = Flask(__name__)
+  app = Flask(__name__, static_folder='static', static_url_path='')
   app.config.from_object(config[config_name])
 
   # Initialize extensions
@@ -33,5 +33,15 @@ def create_app(config_name='default'):
   app.register_blueprint(contact_bp, url_prefix='/api')
   app.register_blueprint(newsletter_bp, url_prefix='/api')
   app.register_blueprint(health_bp, url_prefix='/api')
+
+  # Serve frontend static files in production
+  @app.route('/', defaults={'path': ''})
+  @app.route('/<path:path>')
+  def serve_frontend(path):
+    """Serve frontend files or index.html for client-side routing"""
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+      return send_from_directory(app.static_folder, path)
+    else:
+      return send_from_directory(app.static_folder, 'index.html')
 
   return app
