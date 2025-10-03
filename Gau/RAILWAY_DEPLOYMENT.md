@@ -16,8 +16,23 @@ This guide will help you deploy the O-TECH HOME SERVICES website to Railway.
 2. Click "New Project"
 3. Select "Deploy from GitHub repo"
 4. Choose your repository `Site1`
+5. Railway will automatically detect the project and use Nixpacks builder
 
-### 2. Configure Environment Variables
+### 2. Configure Build Settings (Optional)
+
+Railway should automatically detect and build the project. If needed, you can configure:
+
+**Build Command:**
+```bash
+npm install && npm run build && pip install -r backend/requirements.txt && pip install gunicorn
+```
+
+**Start Command:**
+```bash
+cd backend && gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile - app:app
+```
+
+### 3. Configure Environment Variables
 
 In Railway project settings, add these environment variables:
 
