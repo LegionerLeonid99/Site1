@@ -12,8 +12,8 @@ COPY tailwind.config.js ./
 COPY index.html ./
 RUN npm install
 
-COPY src ./src
-COPY public ./public
+COPY Gau/src ./src
+COPY Gau/public ./public
 RUN npm run build
 
 # Python stage
@@ -28,14 +28,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy backend requirements and install Python dependencies
-COPY backend/requirements.txt ./backend/
+COPY Gau/backend/requirements.txt ./backend/
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Install gunicorn for production
 RUN pip install gunicorn
 
 # Copy backend code
-COPY backend ./backend
+COPY Gau/backend ./backend
 
 # Copy built frontend from builder stage
 COPY --from=frontend-builder /app/frontend/dist ./backend/static
