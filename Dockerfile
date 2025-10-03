@@ -44,7 +44,7 @@ COPY --from=frontend-builder /app/frontend/dist ./backend_temp/static
 WORKDIR /app/backend_temp
 
 # Set environment variables
-ENV FLASK_APP=app.py
+ENV FLASK_APP=wsgi.py
 ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
 
@@ -56,4 +56,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:5000/api/health')"
 
 # Run the application with gunicorn (using shell form for env var expansion)
-CMD ["/bin/sh", "-c", "FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug app:app"]
+CMD ["/bin/sh", "-c", "FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug wsgi:app"]
