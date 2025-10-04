@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
 import { useSEO } from '../../composables/useSEO.js'
+import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for All Electrical Page
 useSEO({ page: 'allElectrical' })
@@ -33,26 +34,67 @@ const electricalServices = ref([
   }
 ])
 
-const contactForm = ref({
+const initialFormState = {
   name: '',
   email: '',
   phone: '',
   applianceType: '',
   brand: '',
   issue: ''
-})
+}
 
-const submitForm = () => {
-  const button = document.querySelector('button[type="submit"]')
-  button.classList.add('professional-loading')
-  button.textContent = 'Sending...'
+const contactForm = ref({ ...initialFormState })
+
+const resetForm = () => {
+  contactForm.value = { ...initialFormState }
+}
+
+const submitForm = async () => {
+  const button = document.querySelector('#all-electrical-form button[type="submit"]')
+
+  if (button) {
+    button.classList.add('professional-loading')
+    button.textContent = 'Sending...'
+  }
   
-  setTimeout(() => {
-    alert('🎉 Thank you! We will contact you soon about your electrical appliance repair.')
-    contactForm.value = { name: '', email: '', phone: '', applianceType: '', brand: '', issue: '' }
-    button.classList.remove('professional-loading')
-    button.innerHTML = 'Request Service <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
-  }, 1500)
+  try {
+    const payload = {
+      name: contactForm.value.name,
+      email: contactForm.value.email,
+      phone: contactForm.value.phone,
+      service: 'All Electrical Appliance Repair',
+      message: contactForm.value.issue,
+      appliance: contactForm.value.applianceType,
+      brand: contactForm.value.brand,
+      issue: contactForm.value.issue
+    }
+
+    const response = await apiFetch('/contact/enquiry', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const result = await response.json().catch(() => null)
+
+    if (response.ok && result?.success) {
+      alert('🎉 Thank you! We will contact you soon about your electrical appliance repair.')
+      resetForm()
+    } else {
+      const message = result?.message ?? `Request failed with status ${response.status}`
+      throw new Error(message)
+    }
+  } catch (error) {
+    console.error('Electrical contact form error:', error)
+    alert(`❌ Failed to send message. ${error?.message ?? 'Please try again.'}`)
+  } finally {
+    if (button) {
+      button.classList.remove('professional-loading')
+      button.innerHTML = 'Request Service <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
+    }
+  }
 }
 </script>
 
@@ -128,18 +170,18 @@ const submitForm = () => {
             </p>
           </div>
           <div>
-            <form @submit.prevent="submitForm" class="professional-card space-y-6">
+            <form id="all-electrical-form" @submit.prevent="submitForm" class="professional-card space-y-6" autocomplete="off">
               <h3 class="text-xl font-bold professional-subheading">Request Electrical Service</h3>
               
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <input v-model="contactForm.name" type="text" required class="professional-input" placeholder="Your Name" />
-                <input v-model="contactForm.email" type="email" required class="professional-input" placeholder="Email" />
+                <input v-model="contactForm.name" type="text" required class="professional-input" placeholder="Your Name" autocomplete="name" />
+                <input v-model="contactForm.email" type="email" required class="professional-input" placeholder="Email" autocomplete="email" />
               </div>
               
-              <input v-model="contactForm.phone" type="tel" required class="professional-input" placeholder="07XXX XXXXXX" />
+              <input v-model="contactForm.phone" type="tel" required class="professional-input" placeholder="07XXX XXXXXX" autocomplete="tel" />
               
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <select v-model="contactForm.applianceType" required class="professional-input">
+                <select v-model="contactForm.applianceType" required class="professional-input" autocomplete="off">
                   <option value="">Appliance Type...</option>
                   <option value="refrigerator">Refrigerator</option>
                   <option value="washer">Washing Machine</option>
@@ -148,10 +190,10 @@ const submitForm = () => {
                   <option value="dishwasher">Dishwasher</option>
                   <option value="other">Other Electrical</option>
                 </select>
-                <input v-model="contactForm.brand" type="text" class="professional-input" placeholder="Brand" />
+                <input v-model="contactForm.brand" type="text" class="professional-input" placeholder="Brand" autocomplete="off" />
               </div>
               
-              <textarea v-model="contactForm.issue" required class="professional-input" rows="3" placeholder="Describe the electrical issue..."></textarea>
+              <textarea v-model="contactForm.issue" required class="professional-input" rows="3" placeholder="Describe the electrical issue..." autocomplete="off"></textarea>
               
               <button type="submit" class="professional-btn professional-btn-primary w-full py-3 group">
                 Request Service

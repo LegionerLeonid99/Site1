@@ -1,63 +1,40 @@
-# Multi-stage Dockerfile for O-TECH HOME SERVICES
-# This builds both frontend (Vue.js) and backend (Flask) in a single container
+# Use the official Node.js image as the base image
+FROM node:18-alpine
 
-FROM node:18-alpine AS frontend-builder
+# Set the working directory
+WORKDIR /app
 
-# Build frontend
-WORKDIR /app/frontend
+# Set environment variables from .env.example
+ENV MAIL_SERVER=smtp.gmail.com
+ENV MAIL_PORT=587
+ENV MAIL_USE_TLS=True
+ENV MAIL_USERNAME=otechhomeservices@gmail.com
+ENV MAIL_PASSWORD=your-email-app-password
+ENV BUSINESS_EMAIL=otechhomeservices@gmail.com
+ENV BUSINESS_NAME="O-TECH HOME SERVICES LTD"
+ENV BUSINESS_PHONE=02030261006
+ENV FRONTEND_URL=http://localhost:5173
+ENV ALLOWED_ORIGINS="http://localhost:5173,http://127.0.0.1:5173"
+ENV API_RATE_LIMIT=100
+ENV VITE_API_BASE_URL=/api
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
-COPY vite.config.js ./
-COPY postcss.config.js ./
-COPY tailwind.config.js ./
-COPY index.html ./
+
+# Install dependencies
 RUN npm install
 
-COPY src ./src
-COPY public ./public
-RUN npm run build
+# Copy the rest of the application code
+COPY . .
 
-# Python stage
-FROM python:3.10-slim
-
-# Set working directory
-WORKDIR /app
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy backend requirements and install Python dependencies
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Install gunicorn for production
-RUN pip install gunicorn
-
-# Copy backend code
-COPY app ./app
-COPY config ./config
-COPY wsgi.py ./
-COPY gunicorn.conf.py ./
+# Copy the .env file for environment variables (if present)
 COPY .env* ./
 
-# Copy built frontend from builder stage
-COPY --from=frontend-builder /app/frontend/dist ./static
+# Build the Vue application
+RUN npm run build
 
-# Set working directory to root (where backend files are)
-WORKDIR /app
+# Expose the port the app runs on
+EXPOSE 3001
 
-# Set environment variables
-ENV FLASK_APP=wsgi.py
-ENV FLASK_ENV=production
-ENV PYTHONUNBUFFERED=1
-
-# Expose port (Railway will set PORT env variable)
-EXPOSE 5000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:5000/api/health')"
-
-# Run the application with gunicorn using config file
-CMD ["/bin/sh", "-c", "FLASK_ENV=production gunicorn --config gunicorn.conf.py wsgi:app"]
+# Command to run the application
+CMD ["npm", "run", "server"]

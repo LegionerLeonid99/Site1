@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
 import { useSEO } from '../../composables/useSEO.js'
+import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Commercial Equipment Page
 useSEO({ page: 'commercialEquipment' })
@@ -33,7 +34,7 @@ const commercialEquipment = ref([
   }
 ])
 
-const contactForm = ref({
+const initialFormState = {
   name: '',
   email: '',
   phone: '',
@@ -42,19 +43,61 @@ const contactForm = ref({
   brand: '',
   issue: '',
   urgency: ''
-})
+}
 
-const submitForm = () => {
-  const button = document.querySelector('button[type="submit"]')
-  button.classList.add('professional-loading')
-  button.textContent = 'Sending...'
+const contactForm = ref({ ...initialFormState })
+
+const resetForm = () => {
+  contactForm.value = { ...initialFormState }
+}
+
+const submitForm = async () => {
+  const button = document.querySelector('#commercial-equipment-form button[type="submit"]')
+
+  if (button) {
+    button.classList.add('professional-loading')
+    button.textContent = 'Sending...'
+  }
   
-  setTimeout(() => {
-    alert('🎉 Thank you! We will contact you soon about your commercial equipment repair.')
-    contactForm.value = { name: '', email: '', phone: '', businessType: '', equipmentType: '', brand: '', issue: '', urgency: '' }
-    button.classList.remove('professional-loading')
-    button.innerHTML = 'Request Service <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
-  }, 1500)
+  try {
+    const payload = {
+      name: contactForm.value.name,
+      email: contactForm.value.email,
+      phone: contactForm.value.phone,
+      businessType: contactForm.value.businessType,
+      equipmentType: contactForm.value.equipmentType,
+      brand: contactForm.value.brand,
+      issue: contactForm.value.issue,
+      urgency: contactForm.value.urgency,
+      message: contactForm.value.issue
+    }
+
+    const response = await apiFetch('/contact/commercial-equipment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+
+    const result = await response.json().catch(() => null)
+
+    if (response.ok && result?.success) {
+      alert('🎉 Thank you! We will contact you soon about your commercial equipment repair.')
+      resetForm()
+    } else {
+      const message = result?.message ?? `Request failed with status ${response.status}`
+      throw new Error(message)
+    }
+  } catch (error) {
+    console.error('Commercial equipment contact form error:', error)
+    alert(`❌ Failed to send message. ${error?.message ?? 'Please try again.'}`)
+  } finally {
+    if (button) {
+      button.classList.remove('professional-loading')
+      button.innerHTML = 'Request Service <span class="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>'
+    }
+  }
 }
 </script>
 
@@ -170,7 +213,7 @@ const submitForm = () => {
           </div>
           
           <div>
-            <form @submit.prevent="submitForm" class="professional-card space-y-6">
+            <form id="commercial-equipment-form" @submit.prevent="submitForm" class="professional-card space-y-6">
               <h3 class="text-xl font-bold professional-subheading">Request Commercial Service</h3>
               
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">

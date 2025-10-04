@@ -11,10 +11,10 @@ A modern full-stack web application built with Vue.js 3 frontend and Flask backe
 - **Location**: `src/` directory
 
 ### Backend (Flask + Python)
-- **Framework**: Flask with factory pattern
+- **Framework**: Flask with application factory pattern
 - **WSGI Server**: Gunicorn
-- **Features**: Contact forms, email service, health checks
-- **Location**: `backend_temp/` directory
+- **Features**: Contact forms, email service, health checks, SPA static serving
+- **Location**: `app/` package with root-level `wsgi.py`
 
 ### Deployment
 - **Platform**: Railway
@@ -35,7 +35,6 @@ npm install
 
 ### 2. Install Backend Dependencies
 ```bash
-cd backend_temp
 pip install -r requirements.txt
 ```
 
@@ -44,7 +43,7 @@ pip install -r requirements.txt
 # Frontend (from root)
 npm run dev
 
-# Backend (from backend_temp/)
+# Backend (from root)
 python wsgi.py
 ```
 
@@ -61,12 +60,15 @@ npm run build
 │   ├── views/             # Page components
 │   ├── router/            # Vue Router configuration
 │   └── assets/            # Static assets
-├── backend_temp/          # Flask backend
-│   ├── app/               # Flask application package
-│   ├── config/            # Configuration files
-│   └── wsgi.py            # WSGI entry point
+├── app/                   # Flask application package
+│   ├── routes/            # API blueprints
+│   ├── services/          # Domain services (email, etc.)
+│   └── __init__.py        # Application factory
+├── config/                # Backend configuration classes
+├── static/                # Built frontend copied for production serving
 ├── public/                # Static files (robots.txt, sitemap.xml)
 ├── dist/                  # Built frontend (generated)
+├── .env.example           # Sample environment variables
 └── *.config.js            # Build configurations
 ```
 
@@ -81,6 +83,26 @@ npm run build
 - `Procfile` - Heroku-style process definition
 
 ## 🚢 Deployment
+- Create a `.env` file based on `.env.example` for local development.
+- In Railway, add the same keys under **Variables** to avoid runtime 502 errors.
+
+## 🔐 Environment Setup
+
+Copy the `.env.example` file to `.env` and adjust values for local development:
+
+```bash
+cp .env.example .env
+```
+
+Key values to update:
+
+- `SECRET_KEY`: generate a random string (use `python -c "import secrets; print(secrets.token_urlsafe(32))"`).
+- `MAIL_*` variables: use an SMTP provider with an app password.
+- `BUSINESS_EMAIL` / `BUSINESS_PHONE`: shown in outbound email templates.
+- `VITE_API_BASE_URL`: keep as `/api` to target the backend in production; set to `http://localhost:5000/api` only if not using the Vite dev proxy.
+
+When running `npm run dev`, Vite proxies `/api` requests to `http://127.0.0.1:5000`, so the default `/api` value works for both development and production.
+
 
 The application is configured for deployment on Railway with multiple build strategies:
 
@@ -91,6 +113,11 @@ The application is configured for deployment on Railway with multiple build stra
 ### Environment Variables
 - `PORT` - Server port (set by Railway)
 - `FLASK_ENV` - Flask environment (production/development)
+- `SECRET_KEY` - Flask session secret (generate a strong value)
+- `MAIL_SERVER`, `MAIL_PORT`, `MAIL_USE_TLS`, `MAIL_USERNAME`, `MAIL_PASSWORD` - SMTP credentials for outbound email
+- `BUSINESS_EMAIL`, `BUSINESS_NAME`, `BUSINESS_PHONE` - Business contact info used in emails
+- `FRONTEND_URL`, `ALLOWED_ORIGINS` - Origins allowed for CORS
+- `VITE_API_BASE_URL` - (Frontend) API root, defaults to `/api` when unset
 
 ## 📧 Features
 
