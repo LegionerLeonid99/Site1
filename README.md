@@ -1,6 +1,6 @@
-# FixIt Appliances - Full Stack Web Application
+# O-TECH Home Services - Full Stack Web Application
 
-A modern full-stack web application built with Vue.js 3 frontend and Flask backend, featuring Tailwind CSS styling and deployed on Railway.
+A modern full-stack web application built with Vue.js 3 frontend and Express.js backend, featuring Tailwind CSS styling and deployed on Railway.
 
 ## 🏗️ Architecture
 
@@ -10,44 +10,36 @@ A modern full-stack web application built with Vue.js 3 frontend and Flask backe
 - **Styling**: Tailwind CSS 3.4.17
 - **Location**: `src/` directory
 
-### Backend (Flask + Python)
-- **Framework**: Flask with application factory pattern
-- **WSGI Server**: Gunicorn
+### Backend (Express.js + Node.js)
+- **Framework**: Express.js
 - **Features**: Contact forms, email service, health checks, SPA static serving
-- **Location**: `app/` package with root-level `wsgi.py`
+- **Location**: `server.js`
 
 ### Deployment
 - **Platform**: Railway
-- **Builder**: Nixpacks
-- **Container**: Docker (fallback)
+- **Container**: Docker
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
-- Python 3.10+
 - npm or yarn
 
-### 1. Install Frontend Dependencies
+### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-### 2. Install Backend Dependencies
+### 2. Development
 ```bash
-pip install -r requirements.txt
-```
-
-### 3. Development
-```bash
-# Frontend (from root)
+# Frontend
 npm run dev
 
-# Backend (from root)
-python wsgi.py
+# Backend
+npm run server:dev
 ```
 
-### 4. Build for Production
+### 3. Build for Production
 ```bash
 npm run build
 ```
@@ -60,30 +52,55 @@ npm run build
 │   ├── views/             # Page components
 │   ├── router/            # Vue Router configuration
 │   └── assets/            # Static assets
-├── app/                   # Flask application package
-│   ├── routes/            # API blueprints
-│   ├── services/          # Domain services (email, etc.)
-│   └── __init__.py        # Application factory
-├── config/                # Backend configuration classes
-├── static/                # Built frontend copied for production serving
 ├── public/                # Static files (robots.txt, sitemap.xml)
 ├── dist/                  # Built frontend (generated)
+├── server.js              # Express backend
 ├── .env.example           # Sample environment variables
 └── *.config.js            # Build configurations
 ```
 
 ## 🔧 Configuration Files
 
-- `package.json` - Frontend dependencies and scripts
+- `package.json` - Dependencies and scripts
 - `vite.config.js` - Vite build configuration
 - `tailwind.config.js` - Tailwind CSS configuration
-- `railway.json` - Railway deployment configuration
-- `nixpacks.toml` - Nixpacks build configuration
 - `Dockerfile` - Docker container configuration
-- `Procfile` - Heroku-style process definition
 
 ## 🚢 Deployment
-- Create a `.env` file based on `.env.example` for local development.
+
+### Railway
+1. Connect your GitHub repository to Railway
+2. Set the following environment variables in Railway dashboard:
+   - `MAIL_SERVER=smtp.gmail.com`
+   - `MAIL_PORT=587`
+   - `MAIL_USERNAME=otechhomeservices@gmail.com`
+   - `MAIL_PASSWORD=your-email-app-password`
+   - `BUSINESS_EMAIL=otechhomeservices@gmail.com`
+   - `BUSINESS_NAME=O-TECH HOME SERVICES LTD`
+   - `BUSINESS_PHONE=02030261006`
+   - `FRONTEND_URL=https://your-railway-app-url.railway.app`
+
+Railway will automatically detect the Dockerfile and build the application.
+
+## 📧 Email Service
+
+The application includes an email service for contact forms and newsletters using Nodemailer. Configure the email settings in the environment variables above.
+
+## 🐳 Docker
+
+To build and run locally with Docker:
+
+```bash
+docker build -t otech-app .
+docker run -p 3001:3001 otech-app
+```
+
+## � Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run server` - Start production server
+- `npm run server:dev` - Start server with nodemon
 - In Railway, add the same keys under **Variables** to avoid runtime 502 errors.
 
 ## 🔐 Environment Setup
