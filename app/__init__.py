@@ -1,8 +1,9 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, request
 from flask_cors import CORS
 from flask_mail import Mail
 from config.config import config
 import os
+import sys
 
 mail = Mail()
 
@@ -25,6 +26,12 @@ def create_app(config_name='default'):
       origins.append('null')
     CORS(app, resources={r"/api/*": {"origins": origins}}, allow_headers=["Content-Type"], supports_credentials=True)
 
+  # Add request logging middleware
+  @app.before_request
+  def log_request_info():
+    print(f"[REQUEST] {request.method} {request.path} from {request.remote_addr}", file=sys.stderr)
+    print(f"[HEADERS] {dict(request.headers)}", file=sys.stderr)
+
   # Register blueprints
   from app.routes.contact import contact_bp
   from app.routes.newsletter import newsletter_bp
@@ -39,6 +46,7 @@ def create_app(config_name='default'):
   @app.route('/<path:path>')
   def serve_frontend(path):
     """Serve frontend files or index.html for client-side routing"""
+    print(f"[SERVE] Requested path: {path}, static_folder: {app.static_folder}", file=sys.stderr)
     if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
       return send_from_directory(app.static_folder, path)
     else:
