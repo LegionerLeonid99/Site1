@@ -45,7 +45,7 @@ print("=" * 80, file=sys.stderr)
 
 if __name__ == '__main__':
     # Run the development server
-    port = int(os.getenv('PORT', 5000))
+    port = int(os.getenv('PORT', 8000))
     debug = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
     
     print(f"Starting Flask server on port {port}")

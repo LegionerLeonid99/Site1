@@ -130,6 +130,47 @@ class EmailService:
             current_app.logger.error(f'Unified service email error: {str(e)}')
             return {'success': False, 'error': str(e)}
 
+    def _prepare_specialised_payload(self, data, default_service):
+        payload = dict(data)
+        payload['service'] = data.get('service') or default_service
+
+        if not payload.get('message'):
+            message_parts = []
+            if data.get('issue'):
+                message_parts.append(f"Issue: {data['issue']}")
+            if data.get('urgency'):
+                message_parts.append(f"Urgency: {data['urgency']}")
+            if data.get('model'):
+                message_parts.append(f"Model: {data['model']}")
+            payload['message'] = '\n'.join(message_parts) if message_parts else 'No additional details provided'
+
+        return payload
+
+    def send_appliance_service_email(self, data):
+        payload = self._prepare_specialised_payload(data, 'Appliance Repair')
+        return self.send_unified_service_email(payload)
+
+    def send_coffee_machine_service_email(self, data):
+        payload = self._prepare_specialised_payload(data, 'Coffee Machine Service')
+        payload.setdefault('machineType', data.get('machineType'))
+        return self.send_unified_service_email(payload)
+
+    def send_dishwasher_service_email(self, data):
+        payload = self._prepare_specialised_payload(data, 'Dishwasher Repair')
+        payload.setdefault('dishwasherType', data.get('dishwasherType'))
+        return self.send_unified_service_email(payload)
+
+    def send_washing_machine_service_email(self, data):
+        payload = self._prepare_specialised_payload(data, 'Washing Machine Repair')
+        payload.setdefault('washerType', data.get('washerType'))
+        return self.send_unified_service_email(payload)
+
+    def send_commercial_equipment_service_email(self, data):
+        payload = self._prepare_specialised_payload(data, 'Commercial Equipment Repair')
+        payload.setdefault('equipmentType', data.get('equipmentType'))
+        payload.setdefault('businessType', data.get('businessType'))
+        return self.send_unified_service_email(payload)
+
     def send_newsletter_signup(self, email):
         try:
             # Welcome email to subscriber
