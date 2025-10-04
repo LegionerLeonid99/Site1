@@ -1,38 +1,74 @@
-# Multi-stage Dockerfile for O-TECH HOME SERVICES
-# This builds both frontend (Vue.js) and backend (Flask) in a single container
+# Stage 1: Build the frontend# Multi-stage Dockerfile for O-TECH HOME SERVICES
+
+FROM node:18-alpine AS frontend-builder# This builds both frontend (Vue.js) and backend (Flask) in a single container
+
+WORKDIR /app
 
 FROM node:18-alpine AS frontend-builder
 
-# Build frontend
-WORKDIR /app/frontend
-COPY package*.json ./
-COPY vite.config.js ./
-COPY postcss.config.js ./
-COPY tailwind.config.js ./
-COPY index.html ./
+# Copy all frontend related files
+
+COPY package*.json ./# Build frontend
+
+COPY vite.config.js ./WORKDIR /app/frontend
+
+COPY postcss.config.js ./COPY package*.json ./
+
+COPY tailwind.config.js ./COPY vite.config.js ./
+
+COPY index.html ./COPY postcss.config.js ./
+
+COPY src ./srcCOPY tailwind.config.js ./
+
+COPY public ./publicCOPY index.html ./
+
 RUN npm install
 
-COPY src ./src
-COPY public ./public
+# Install dependencies and build
+
+RUN npm installCOPY src ./src
+
+RUN npm run buildCOPY public ./public
+
 RUN npm run build
 
-# Python stage
-FROM python:3.10-slim
+# Stage 2: Setup the backend
 
-# Set working directory
-WORKDIR /app
+FROM node:18-alpine AS backend# Python stage
+
+WORKDIR /appFROM python:3.10-slim
+
+
+
+# Copy package files and install dependencies# Set working directory
+
+COPY package*.json ./WORKDIR /app
+
+RUN npm install --production
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
+
+# Copy server fileRUN apt-get update && apt-get install -y \
+
+COPY server.js ./    gcc \
+
     && rm -rf /var/lib/apt/lists/*
 
-# Copy backend requirements and install Python dependencies
+# Copy the built frontend from the builder stage
+
+COPY --from=frontend-builder /app/dist ./dist# Copy backend requirements and install Python dependencies
+
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose the port the app runs onRUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 3000
 
 # Install gunicorn for production
-RUN pip install gunicorn
+
+# Start the serverRUN pip install gunicorn
+
+CMD ["node", "server.js"]
 
 # Copy backend code
 COPY app ./app
