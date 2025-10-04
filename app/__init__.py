@@ -32,6 +32,15 @@ def create_app(config_name='default'):
     except Exception as e:
       print(f"[REQUEST LOG ERROR] {e}", file=sys.stderr, flush=True)
 
+  # Add response logging
+  @app.after_request
+  def log_response_info(response):
+    try:
+      print(f"[RESPONSE] {request.method} {request.path} -> {response.status_code}", file=sys.stderr, flush=True)
+    except Exception as e:
+      print(f"[RESPONSE LOG ERROR] {e}", file=sys.stderr, flush=True)
+    return response
+
   # Register blueprints
   from app.routes.contact import contact_bp
   from app.routes.newsletter import newsletter_bp
@@ -47,17 +56,27 @@ def create_app(config_name='default'):
   def serve_frontend(path):
     """Serve frontend files or index.html for client-side routing"""
     try:
-      print(f"[SERVE] Requested path: '{path}'", file=sys.stderr, flush=True)
+      print(f"[SERVE] Requested path: '{path}', static_folder: {app.static_folder}", file=sys.stderr, flush=True)
+      
       if path and path != "":
         file_path = os.path.join(app.static_folder, path)
+        print(f"[SERVE] Checking file: {file_path}", file=sys.stderr, flush=True)
+        
         if os.path.exists(file_path) and os.path.isfile(file_path):
-          print(f"[SERVE] Serving file: {file_path}", file=sys.stderr, flush=True)
+          print(f"[SERVE] File exists, serving: {path}", file=sys.stderr, flush=True)
           return send_from_directory(app.static_folder, path)
+      
       # Default to index.html for SPA routing
-      print(f"[SERVE] Serving index.html", file=sys.stderr, flush=True)
+      index_path = os.path.join(app.static_folder, 'index.html')
+      print(f"[SERVE] Serving index.html from: {index_path}", file=sys.stderr, flush=True)
+      print(f"[SERVE] Index.html exists: {os.path.exists(index_path)}", file=sys.stderr, flush=True)
+      
       return send_from_directory(app.static_folder, 'index.html')
+      
     except Exception as e:
-      print(f"[SERVE ERROR] {e}", file=sys.stderr, flush=True)
-      return str(e), 500
+      import traceback
+      print(f"[SERVE ERROR] {type(e).__name__}: {e}", file=sys.stderr, flush=True)
+      print(f"[SERVE ERROR TRACEBACK] {traceback.format_exc()}", file=sys.stderr, flush=True)
+      return f"Error serving file: {e}", 500
 
   return app
