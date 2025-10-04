@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 // Email configuration
 const emailConfig = {
   host: process.env.MAIL_SERVER || 'smtp.gmail.com',
-  port: parseInt(process.env.MAIL_PORT) || 587,
-  secure: false, // true for 465, false for other ports
+  port: parseInt(process.env.MAIL_PORT) || 465,
+  secure: true, // Use SSL for port 465
   auth: {
     user: process.env.MAIL_USERNAME,
     pass: process.env.MAIL_PASSWORD
