@@ -9,7 +9,13 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ["npm run build", "mkdir -p static", "cp -r dist/* static/"]
+cmds = [
+    "npm run build",
+    "mkdir -p static",
+    "cp -r dist/* static/",
+    "echo 'Static files copied successfully'",
+    "ls -la static/"
+]
 
 [start]
-cmd = "sh -c 'FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug wsgi:app'"
+cmd = "sh -c 'FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug wsgi:app'"

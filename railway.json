@@ -2,10 +2,10 @@
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "npm install && npm run build && mkdir -p static && cp -r dist/* static/ && pip install -r requirements.txt && pip install gunicorn"
+    "buildCommand": "npm install && npm run build && mkdir -p static && cp -r dist/* static/ && echo 'Static files copied' && ls -la static/ && pip install -r requirements.txt && pip install gunicorn"
   },
   "deploy": {
-    "startCommand": "sh -c 'FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug wsgi:app'",
+    "startCommand": "sh -c 'FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug wsgi:app'",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
