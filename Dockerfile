@@ -28,20 +28,23 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy backend requirements and install Python dependencies
-COPY backend_temp/requirements.txt ./backend_temp/
-RUN pip install --no-cache-dir -r backend_temp/requirements.txt
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Install gunicorn for production
 RUN pip install gunicorn
 
 # Copy backend code
-COPY backend_temp ./backend_temp
+COPY app ./app
+COPY config ./config
+COPY wsgi.py ./
+COPY .env* ./
 
 # Copy built frontend from builder stage
-COPY --from=frontend-builder /app/frontend/dist ./backend_temp/static
+COPY --from=frontend-builder /app/frontend/dist ./static
 
-# Set working directory to backend
-WORKDIR /app/backend_temp
+# Set working directory to root (where backend files are)
+WORKDIR /app
 
 # Set environment variables
 ENV FLASK_APP=wsgi.py
