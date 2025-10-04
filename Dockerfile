@@ -38,6 +38,7 @@ RUN pip install gunicorn
 COPY app ./app
 COPY config ./config
 COPY wsgi.py ./
+COPY gunicorn.conf.py ./
 COPY .env* ./
 
 # Copy built frontend from builder stage
@@ -58,5 +59,5 @@ EXPOSE 5000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:5000/api/health')"
 
-# Run the application with gunicorn (using shell form for env var expansion)
-CMD ["/bin/sh", "-c", "FLASK_ENV=production gunicorn --bind 0.0.0.0:${PORT:-5000} --workers 2 --timeout 120 --access-logfile - --error-logfile - --log-level debug wsgi:app"]
+# Run the application with gunicorn using config file
+CMD ["/bin/sh", "-c", "FLASK_ENV=production gunicorn --config gunicorn.conf.py wsgi:app"]
