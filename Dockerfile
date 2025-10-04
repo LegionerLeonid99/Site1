@@ -4,12 +4,8 @@ FROM node:18-alpine
 # Set the working directory
 WORKDIR /app
 
-# Set environment variables from .env.example
-ENV MAIL_SERVER=smtp.gmail.com
-ENV MAIL_PORT=587
-ENV MAIL_USE_TLS=True
-ENV MAIL_USERNAME=otechhomeservices@gmail.com
-ENV MAIL_PASSWORD="oipf xumv jklz yqyh"
+# Set environment variables
+ENV SENDGRID_API_KEY=your-sendgrid-api-key
 ENV BUSINESS_EMAIL=otechhomeservices@gmail.com
 ENV BUSINESS_NAME="O-TECH HOME SERVICES LTD"
 ENV BUSINESS_PHONE=02030261006

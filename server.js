@@ -1,11 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
 dotenv.config();
+
+// Initialize SendGrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY || 'your-sendgrid-api-key');
 
 const app = express();
 app.set('trust proxy', 1); // Trust Railway's proxy for rate limiting
@@ -30,28 +33,11 @@ app.use('/api/', limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Email configuration
-const emailConfig = {
-  host: process.env.MAIL_SERVER || 'smtp.gmail.com',
-  port: parseInt(process.env.MAIL_PORT) || 465,
-  secure: true, // Use SSL for port 465
-  auth: {
-    user: process.env.MAIL_USERNAME,
-    pass: process.env.MAIL_PASSWORD
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-};
-
-const transporter = nodemailer.createTransport(emailConfig);
-
 // Test email configuration (don't fail if it doesn't work)
-if (process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD) {
-  // Skip verification for now to allow server to start
-  console.log('📧 Email service: Configured (verification skipped)');
+if (process.env.SENDGRID_API_KEY) {
+  console.log('📧 Email service: Configured');
 } else {
-  console.log('📧 Email service: Not configured (missing credentials)');
+  console.log('📧 Email service: Not configured (missing SENDGRID_API_KEY)');
 }
 
 // Email service class
@@ -61,8 +47,8 @@ class EmailService {
       console.log(`Sending contact email for ${service} from ${name} (${email})`);
 
       const businessMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
         to: process.env.BUSINESS_EMAIL,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `O-TECH HOME SERVICES Website Contact - ${service}`,
         html: `
           <h2>New Website Enquiry (O-TECH HOME SERVICES)</h2>
@@ -78,8 +64,8 @@ class EmailService {
       };
 
       const customerMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
         to: email,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `O-TECH HOME SERVICES - We received your ${service} enquiry`,
         html: `
           <h2 style='margin:0 0 12px 0;'>Thank you - your enquiry is with our team</h2>
@@ -102,8 +88,8 @@ class EmailService {
         `
       };
 
-      await transporter.sendMail(businessMailOptions);
-      await transporter.sendMail(customerMailOptions);
+      await sgMail.send(businessMailOptions);
+      await sgMail.send(customerMailOptions);
 
       console.log(`Successfully sent contact emails for ${service}`);
       return { success: true };
@@ -133,8 +119,8 @@ class EmailService {
       }
 
       const businessMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
         to: process.env.BUSINESS_EMAIL,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `O-TECH HOME SERVICES Enquiry - ${data.service}`,
         html: `
           <h2 style='margin:0 0 12px 0;'>New Website Service Enquiry (O-TECH HOME SERVICES)</h2>
@@ -149,8 +135,8 @@ class EmailService {
       };
 
       const customerMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
         to: data.email,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `O-TECH HOME SERVICES - ${data.service} enquiry received`,
         html: `
           <h2 style='margin:0 0 12px 0;'>We've got your request</h2>
@@ -166,8 +152,8 @@ class EmailService {
         `
       };
 
-      await transporter.sendMail(businessMailOptions);
-      await transporter.sendMail(customerMailOptions);
+      await sgMail.send(businessMailOptions);
+      await sgMail.send(customerMailOptions);
 
       console.log(`Successfully sent unified service emails for ${data.service}`);
       return { success: true };
@@ -182,8 +168,8 @@ class EmailService {
       console.log(`Sending newsletter signup email to ${email}`);
 
       const welcomeMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
         to: email,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `Welcome to ${process.env.BUSINESS_NAME} Newsletter!`,
         html: `
           <h2>Welcome to ${process.env.BUSINESS_NAME}!</h2>
@@ -202,8 +188,8 @@ class EmailService {
       };
 
       const businessMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
         to: process.env.BUSINESS_EMAIL,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: 'New Newsletter Subscription',
         html: `
           <h2>New Newsletter Subscription</h2>
@@ -213,8 +199,8 @@ class EmailService {
         `
       };
 
-      await transporter.sendMail(welcomeMailOptions);
-      await transporter.sendMail(businessMailOptions);
+      await sgMail.send(welcomeMailOptions);
+      await sgMail.send(businessMailOptions);
 
       console.log('Successfully sent newsletter signup emails');
       return { success: true };
@@ -242,7 +228,7 @@ app.get('/api/debug', (req, res) => {
     status: 'debug',
     environment: process.env.NODE_ENV || 'development',
     port: PORT,
-    emailConfigured: !!(process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD)
+    emailConfigured: !!process.env.SENDGRID_API_KEY
   });
 });
 
@@ -250,16 +236,13 @@ app.get('/api/email-debug', (req, res) => {
   res.json({
     status: 'email_debug',
     config_status: {
-      MAIL_SERVER: process.env.MAIL_SERVER,
-      MAIL_PORT: process.env.MAIL_PORT,
-      MAIL_USERNAME: !!(process.env.MAIL_USERNAME),
-      MAIL_PASSWORD: !!(process.env.MAIL_PASSWORD),
+      SENDGRID_API_KEY: !!(process.env.SENDGRID_API_KEY),
       BUSINESS_EMAIL: process.env.BUSINESS_EMAIL,
       BUSINESS_NAME: process.env.BUSINESS_NAME,
       BUSINESS_PHONE: process.env.BUSINESS_PHONE
     },
-    service_status: 'Email service initialized successfully',
-    note: 'MAIL_USERNAME and MAIL_PASSWORD show as boolean for security'
+    service_status: 'SendGrid email service initialized',
+    note: 'SENDGRID_API_KEY shows as boolean for security'
   });
 });
 
