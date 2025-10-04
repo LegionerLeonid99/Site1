@@ -316,7 +316,7 @@ const scrollToSection = (sectionId) => {
             <h3 class="text-lg lg:text-xl font-bold professional-subheading mb-4 lg:mb-6">Still Have Questions?</h3>
             <p class="text-gray-600 professional-text mb-4 lg:mb-6 text-sm lg:text-base">Contact our family directly and we'll get back to you quickly with answers.</p>
             
-            <form @submit.prevent="submitForm" class="space-y-4">
+            <form @submit.prevent="submitForm" class="space-y-4" autocomplete="off">
               <div>
                 <label for="faq-name" class="block text-sm font-medium text-gray-700 professional-subheading mb-2">Your Name</label>
                 <input
@@ -326,6 +326,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="Enter your name..."
+                  autocomplete="name"
                 />
               </div>
 
@@ -338,6 +339,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="your.email@example.com"
+                  autocomplete="email"
                 />
               </div>
 
@@ -350,6 +352,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="07XXX XXXXXX"
+                  autocomplete="tel"
                 />
               </div>
 
@@ -360,6 +363,7 @@ const scrollToSection = (sectionId) => {
                   id="faq-service"
                   required
                   class="professional-input"
+                  autocomplete="off"
                 >
                   <option value="">Select a service...</option>
                   <option value="Appliance Repair">Appliance Repair</option>
@@ -382,6 +386,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="Ask your question or describe your appliance issue..."
+                  autocomplete="off"
                 ></textarea>
               </div>
 
@@ -411,7 +416,7 @@ const scrollToSection = (sectionId) => {
         </div>
 
         <div class="mx-auto mt-16 max-w-xl">
-          <form @submit.prevent="submitForm" class="professional-card mb-0 mt-6 space-y-6 p-6">
+          <form @submit.prevent="submitForm" class="professional-card mb-0 mt-6 space-y-6 p-6" autocomplete="off">
             <div>
               <label for="name" class="block text-sm font-medium text-gray-700 professional-subheading mb-2">Your Name</label>
               <div class="relative">
@@ -422,6 +427,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="Enter your name..."
+                  autocomplete="name"
                 />
               </div>
             </div>
@@ -436,6 +442,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="your.email@example.com"
+                  autocomplete="email"
                 />
               </div>
             </div>
@@ -450,6 +457,7 @@ const scrollToSection = (sectionId) => {
                   required
                   class="professional-input"
                   placeholder="07XXX XXXXXX"
+                  autocomplete="tel"
                 />
               </div>
             </div>
@@ -461,6 +469,7 @@ const scrollToSection = (sectionId) => {
                 id="service"
                 required
                 class="professional-input"
+                autocomplete="off"
               >
                 <option value="">Select a service...</option>
                 <option value="Appliance Repair">Appliance Repair</option>
@@ -483,6 +492,7 @@ const scrollToSection = (sectionId) => {
                 required
                 class="professional-input"
                 placeholder="Tell us about your appliance issue or service needed..."
+                autocomplete="off"
               ></textarea>
             </div>
 

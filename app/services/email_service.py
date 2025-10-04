@@ -2,8 +2,16 @@ from flask import current_app
 from flask_mail import Message
 from app import mail
 from datetime import datetime
+import threading
 
 class EmailService:
+    def _send_email_async(self, msg):
+        """Send email asynchronously in a background thread"""
+        try:
+            mail.send(msg)
+        except Exception as e:
+            current_app.logger.error(f'Async email sending error: {str(e)}')
+
     def send_contact_email(self, name, email, phone, service, message):
         try:
             business_msg = Message(
@@ -50,8 +58,10 @@ class EmailService:
             <p style='margin:0;'>Kind regards,<br>O-TECH HOME SERVICES Team</p>
             """
 
-            mail.send(business_msg)
-            mail.send(customer_msg)
+            # Send emails asynchronously
+            threading.Thread(target=self._send_email_async, args=(business_msg,)).start()
+            threading.Thread(target=self._send_email_async, args=(customer_msg,)).start()
+            
             return {'success': True}
         except Exception as e:
             current_app.logger.error(f'Email sending error: {str(e)}')
@@ -122,8 +132,9 @@ class EmailService:
             <p style='margin:0 0 0 0;'>Kind regards,<br>O-TECH HOME SERVICES Team</p>
             """
 
-            mail.send(business_msg)
-            mail.send(customer_msg)
+            # Send emails asynchronously
+            threading.Thread(target=self._send_email_async, args=(business_msg,)).start()
+            threading.Thread(target=self._send_email_async, args=(customer_msg,)).start()
 
             return {'success': True}
         except Exception as e:
@@ -208,8 +219,9 @@ class EmailService:
             <p><strong>Subscribed:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
             """
             
-            mail.send(welcome_msg)
-            mail.send(business_msg)
+            # Send emails asynchronously
+            threading.Thread(target=self._send_email_async, args=(welcome_msg,)).start()
+            threading.Thread(target=self._send_email_async, args=(business_msg,)).start()
             
             return {'success': True}
             

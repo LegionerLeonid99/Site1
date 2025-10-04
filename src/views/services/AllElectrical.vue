@@ -170,18 +170,18 @@ const submitForm = async () => {
             </p>
           </div>
           <div>
-            <form id="all-electrical-form" @submit.prevent="submitForm" class="professional-card space-y-6">
+            <form id="all-electrical-form" @submit.prevent="submitForm" class="professional-card space-y-6" autocomplete="off">
               <h3 class="text-xl font-bold professional-subheading">Request Electrical Service</h3>
               
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <input v-model="contactForm.name" type="text" required class="professional-input" placeholder="Your Name" />
-                <input v-model="contactForm.email" type="email" required class="professional-input" placeholder="Email" />
+                <input v-model="contactForm.name" type="text" required class="professional-input" placeholder="Your Name" autocomplete="name" />
+                <input v-model="contactForm.email" type="email" required class="professional-input" placeholder="Email" autocomplete="email" />
               </div>
               
-              <input v-model="contactForm.phone" type="tel" required class="professional-input" placeholder="07XXX XXXXXX" />
+              <input v-model="contactForm.phone" type="tel" required class="professional-input" placeholder="07XXX XXXXXX" autocomplete="tel" />
               
               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <select v-model="contactForm.applianceType" required class="professional-input">
+                <select v-model="contactForm.applianceType" required class="professional-input" autocomplete="off">
                   <option value="">Appliance Type...</option>
                   <option value="refrigerator">Refrigerator</option>
                   <option value="washer">Washing Machine</option>
@@ -190,10 +190,10 @@ const submitForm = async () => {
                   <option value="dishwasher">Dishwasher</option>
                   <option value="other">Other Electrical</option>
                 </select>
-                <input v-model="contactForm.brand" type="text" class="professional-input" placeholder="Brand" />
+                <input v-model="contactForm.brand" type="text" class="professional-input" placeholder="Brand" autocomplete="off" />
               </div>
               
-              <textarea v-model="contactForm.issue" required class="professional-input" rows="3" placeholder="Describe the electrical issue..."></textarea>
+              <textarea v-model="contactForm.issue" required class="professional-input" rows="3" placeholder="Describe the electrical issue..." autocomplete="off"></textarea>
               
               <button type="submit" class="professional-btn professional-btn-primary w-full py-3 group">
                 Request Service
