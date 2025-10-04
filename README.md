@@ -71,7 +71,10 @@ npm run build
 ### Railway
 1. Connect your GitHub repository to Railway
 2. Set the following environment variables in Railway dashboard:
-   - `SENDGRID_API_KEY=your-sendgrid-api-key`
+   - `MAIL_SERVER=smtp.mailgun.org`
+   - `MAIL_PORT=587`
+   - `MAIL_USERNAME=your-mailgun-smtp-username`
+   - `MAIL_PASSWORD=your-mailgun-smtp-password`
    - `BUSINESS_EMAIL=otechhomeservices@gmail.com`
    - `BUSINESS_NAME=O-TECH HOME SERVICES LTD`
    - `BUSINESS_PHONE=02030261006`
@@ -81,7 +84,7 @@ Railway will automatically detect the Dockerfile and build the application.
 
 ## 📧 Email Service
 
-The application includes an email service for contact forms and newsletters using SendGrid. Configure the SendGrid API key in the environment variables above.
+The application includes an email service for contact forms and newsletters using SMTP. Configure the SMTP settings in the environment variables above.
 
 ## 🐳 Docker
 
