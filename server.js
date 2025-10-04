@@ -1,40 +1,18 @@
 import express from 'express';
 import cors from 'cors';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Initialize Nodemailer with Gmail SMTP
-const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_SERVER || 'smtp.gmail.com',
-  port: parseInt(process.env.MAIL_PORT || '465'),
-  secure: true, // true for 465, false for other ports
-  auth: {
-    user: process.env.MAIL_USERNAME,
-    pass: process.env.MAIL_PASSWORD
-  },
-  pool: true, // Use pooled connections
-  maxConnections: 5,
-  maxMessages: 100,
-  rateDelta: 1000, // Send 1 email per second max
-  rateLimit: 5,
-  connectionTimeout: 10000, // 10 seconds
-  greetingTimeout: 10000,
-  socketTimeout: 30000 // 30 seconds
-});
-
-// Verify transporter configuration on startup (non-blocking)
-if (process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD) {
-  transporter.verify((error, success) => {
-    if (error) {
-      console.log('⚠️  Email service verification failed:', error.message);
-    } else {
-      console.log('✅ Email service verified and ready');
-    }
-  });
+// Initialize SendGrid
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  console.log('✅ SendGrid API initialized');
+} else {
+  console.log('⚠️  SendGrid API key not configured');
 }
 
 const app = express();
@@ -60,11 +38,11 @@ app.use('/api/', limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Test email configuration (don't fail if it doesn't work)
-if (process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD) {
-  console.log('📧 Email service: Configured with Gmail SMTP');
+// Email configuration status
+if (process.env.SENDGRID_API_KEY) {
+  console.log('📧 Email service: SendGrid API ready');
 } else {
-  console.log('📧 Email service: Not configured (missing MAIL_USERNAME or MAIL_PASSWORD)');
+  console.log('📧 Email service: Not configured (missing SENDGRID_API_KEY)');
 }
 
 // Email service class
@@ -73,9 +51,9 @@ class EmailService {
     try {
       console.log(`Sending contact email for ${service} from ${name} (${email})`);
 
-      const businessMailOptions = {
-        from: process.env.MAIL_USERNAME,
+      const businessMail = {
         to: process.env.BUSINESS_EMAIL,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `O-TECH HOME SERVICES Website Contact - ${service}`,
         html: `
           <h2>New Website Enquiry (O-TECH HOME SERVICES)</h2>
@@ -90,9 +68,9 @@ class EmailService {
         `
       };
 
-      const customerMailOptions = {
-        from: process.env.MAIL_USERNAME,
+      const customerMail = {
         to: email,
+        from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
         subject: `O-TECH HOME SERVICES - We received your ${service} enquiry`,
         html: `
           <h2 style='margin:0 0 12px 0;'>Thank you - your enquiry is with our team</h2>
@@ -115,20 +93,10 @@ class EmailService {
         `
       };
 
-      // Send emails with timeout protection
-      const sendWithTimeout = (mailOptions, timeout = 25000) => {
-        return Promise.race([
-          transporter.sendMail(mailOptions),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Email timeout')), timeout)
-          )
-        ]);
-      };
-
-      // Send both emails in parallel with timeout
+      // Send both emails using SendGrid API
       await Promise.all([
-        sendWithTimeout(businessMailOptions),
-        sendWithTimeout(customerMailOptions)
+        sgMail.send(businessMail),
+        sgMail.send(customerMail)
       ]);
 
       console.log(`Successfully sent contact emails for ${service}`);
@@ -158,9 +126,9 @@ class EmailService {
         }
       }
 
-      const businessMailOptions = {
-        from: process.env.MAIL_USERNAME,
+      const businessMail = {
         to: process.env.BUSINESS_EMAIL,
+        from: process.env.BUSINESS_EMAIL,
         subject: `O-TECH HOME SERVICES Enquiry - ${data.service}`,
         html: `
           <h2 style='margin:0 0 12px 0;'>New Website Service Enquiry (O-TECH HOME SERVICES)</h2>
@@ -174,9 +142,9 @@ class EmailService {
         `
       };
 
-      const customerMailOptions = {
-        from: process.env.MAIL_USERNAME,
+      const customerMail = {
         to: data.email,
+        from: process.env.BUSINESS_EMAIL,
         subject: `O-TECH HOME SERVICES - ${data.service} enquiry received`,
         html: `
           <h2 style='margin:0 0 12px 0;'>We've got your request</h2>
@@ -192,20 +160,10 @@ class EmailService {
         `
       };
 
-      // Send emails with timeout protection
-      const sendWithTimeout = (mailOptions, timeout = 25000) => {
-        return Promise.race([
-          transporter.sendMail(mailOptions),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Email timeout')), timeout)
-          )
-        ]);
-      };
-
-      // Send both emails in parallel with timeout
+      // Send both emails using SendGrid API
       await Promise.all([
-        sendWithTimeout(businessMailOptions),
-        sendWithTimeout(customerMailOptions)
+        sgMail.send(businessMail),
+        sgMail.send(customerMail)
       ]);
 
       console.log(`Successfully sent unified service emails for ${data.service}`);
@@ -220,9 +178,9 @@ class EmailService {
     try {
       console.log(`Sending newsletter signup email to ${email}`);
 
-      const welcomeMailOptions = {
-        from: process.env.MAIL_USERNAME,
+      const welcomeMail = {
         to: email,
+        from: process.env.BUSINESS_EMAIL,
         subject: `Welcome to ${process.env.BUSINESS_NAME} Newsletter!`,
         html: `
           <h2>Welcome to ${process.env.BUSINESS_NAME}!</h2>
@@ -240,9 +198,9 @@ class EmailService {
         `
       };
 
-      const businessMailOptions = {
-        from: process.env.MAIL_USERNAME,
+      const businessMail = {
         to: process.env.BUSINESS_EMAIL,
+        from: process.env.BUSINESS_EMAIL,
         subject: 'New Newsletter Subscription',
         html: `
           <h2>New Newsletter Subscription</h2>
@@ -252,20 +210,10 @@ class EmailService {
         `
       };
 
-      // Send emails with timeout protection
-      const sendWithTimeout = (mailOptions, timeout = 25000) => {
-        return Promise.race([
-          transporter.sendMail(mailOptions),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Email timeout')), timeout)
-          )
-        ]);
-      };
-
-      // Send both emails in parallel with timeout
+      // Send both emails using SendGrid API
       await Promise.all([
-        sendWithTimeout(welcomeMailOptions),
-        sendWithTimeout(businessMailOptions)
+        sgMail.send(welcomeMail),
+        sgMail.send(businessMail)
       ]);
 
       console.log('Successfully sent newsletter signup emails');
@@ -294,7 +242,7 @@ app.get('/api/debug', (req, res) => {
     status: 'debug',
     environment: process.env.NODE_ENV || 'development',
     port: PORT,
-    emailConfigured: !!(process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD)
+    emailConfigured: !!process.env.SENDGRID_API_KEY
   });
 });
 
@@ -302,16 +250,13 @@ app.get('/api/email-debug', (req, res) => {
   res.json({
     status: 'email_debug',
     config_status: {
-      MAIL_USERNAME: !!(process.env.MAIL_USERNAME),
-      MAIL_PASSWORD: !!(process.env.MAIL_PASSWORD),
-      MAIL_SERVER: process.env.MAIL_SERVER || 'smtp.gmail.com',
-      MAIL_PORT: process.env.MAIL_PORT || '465',
+      SENDGRID_API_KEY: !!process.env.SENDGRID_API_KEY,
       BUSINESS_EMAIL: process.env.BUSINESS_EMAIL,
       BUSINESS_NAME: process.env.BUSINESS_NAME,
       BUSINESS_PHONE: process.env.BUSINESS_PHONE
     },
-    service_status: 'Gmail SMTP email service initialized',
-    note: 'MAIL_USERNAME and MAIL_PASSWORD show as boolean for security'
+    service_status: 'SendGrid API initialized',
+    note: 'SENDGRID_API_KEY shows as boolean for security'
   });
 });
 
