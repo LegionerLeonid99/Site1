@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
+app.set('trust proxy', 1); // Trust Railway's proxy for rate limiting
 const PORT = process.env.PORT || 3001;
 
 // Security middleware
