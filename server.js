@@ -15,8 +15,27 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.MAIL_USERNAME,
     pass: process.env.MAIL_PASSWORD
-  }
+  },
+  pool: true, // Use pooled connections
+  maxConnections: 5,
+  maxMessages: 100,
+  rateDelta: 1000, // Send 1 email per second max
+  rateLimit: 5,
+  connectionTimeout: 10000, // 10 seconds
+  greetingTimeout: 10000,
+  socketTimeout: 30000 // 30 seconds
 });
+
+// Verify transporter configuration on startup (non-blocking)
+if (process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD) {
+  transporter.verify((error, success) => {
+    if (error) {
+      console.log('⚠️  Email service verification failed:', error.message);
+    } else {
+      console.log('✅ Email service verified and ready');
+    }
+  });
+}
 
 const app = express();
 app.set('trust proxy', 1); // Trust Railway's proxy for rate limiting
@@ -96,8 +115,21 @@ class EmailService {
         `
       };
 
-      await transporter.sendMail(businessMailOptions);
-      await transporter.sendMail(customerMailOptions);
+      // Send emails with timeout protection
+      const sendWithTimeout = (mailOptions, timeout = 25000) => {
+        return Promise.race([
+          transporter.sendMail(mailOptions),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Email timeout')), timeout)
+          )
+        ]);
+      };
+
+      // Send both emails in parallel with timeout
+      await Promise.all([
+        sendWithTimeout(businessMailOptions),
+        sendWithTimeout(customerMailOptions)
+      ]);
 
       console.log(`Successfully sent contact emails for ${service}`);
       return { success: true };
@@ -160,8 +192,21 @@ class EmailService {
         `
       };
 
-      await transporter.sendMail(businessMailOptions);
-      await transporter.sendMail(customerMailOptions);
+      // Send emails with timeout protection
+      const sendWithTimeout = (mailOptions, timeout = 25000) => {
+        return Promise.race([
+          transporter.sendMail(mailOptions),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Email timeout')), timeout)
+          )
+        ]);
+      };
+
+      // Send both emails in parallel with timeout
+      await Promise.all([
+        sendWithTimeout(businessMailOptions),
+        sendWithTimeout(customerMailOptions)
+      ]);
 
       console.log(`Successfully sent unified service emails for ${data.service}`);
       return { success: true };
@@ -207,8 +252,21 @@ class EmailService {
         `
       };
 
-      await transporter.sendMail(welcomeMailOptions);
-      await transporter.sendMail(businessMailOptions);
+      // Send emails with timeout protection
+      const sendWithTimeout = (mailOptions, timeout = 25000) => {
+        return Promise.race([
+          transporter.sendMail(mailOptions),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Email timeout')), timeout)
+          )
+        ]);
+      };
+
+      // Send both emails in parallel with timeout
+      await Promise.all([
+        sendWithTimeout(welcomeMailOptions),
+        sendWithTimeout(businessMailOptions)
+      ]);
 
       console.log('Successfully sent newsletter signup emails');
       return { success: true };
@@ -236,7 +294,7 @@ app.get('/api/debug', (req, res) => {
     status: 'debug',
     environment: process.env.NODE_ENV || 'development',
     port: PORT,
-    emailConfigured: !!process.env.SENDGRID_API_KEY
+    emailConfigured: !!(process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD)
   });
 });
 
