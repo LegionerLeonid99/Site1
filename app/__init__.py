@@ -7,7 +7,7 @@ import os
 mail = Mail()
 
 def create_app(config_name='default'):
-  app = Flask(__name__, static_folder='static', static_url_path='')
+  app = Flask(__name__, static_folder=os.path.join(os.getcwd(), 'static'), static_url_path='')
   app.config.from_object(config[config_name])
 
   # Initialize extensions
