@@ -7,10 +7,19 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Trust Railway's proxy
-const app = express();
-app.set('trust proxy', 1);
+// Initialize Nodemailer with Gmail SMTP
+const transporter = nodemailer.createTransport({
+  host: process.env.MAIL_SERVER || 'smtp.gmail.com',
+  port: parseInt(process.env.MAIL_PORT || '465'),
+  secure: true, // true for 465, false for other ports
+  auth: {
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD
+  }
+});
 
+const app = express();
+app.set('trust proxy', 1); // Trust Railway's proxy for rate limiting
 const PORT = process.env.PORT || 3001;
 
 // Security middleware
@@ -32,27 +41,11 @@ app.use('/api/', limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Email configuration
-const emailConfig = {
-  host: process.env.MAIL_SERVER || 'smtp.mailgun.org',
-  port: parseInt(process.env.MAIL_PORT) || 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.MAIL_USERNAME,
-    pass: process.env.MAIL_PASSWORD
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-};
-
-const transporter = nodemailer.createTransport(emailConfig);
-
 // Test email configuration (don't fail if it doesn't work)
 if (process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD) {
-  console.log('📧 Email service: Configured');
+  console.log('📧 Email service: Configured with Gmail SMTP');
 } else {
-  console.log('📧 Email service: Not configured (missing credentials)');
+  console.log('📧 Email service: Not configured (missing MAIL_USERNAME or MAIL_PASSWORD)');
 }
 
 // Email service class
@@ -62,7 +55,7 @@ class EmailService {
       console.log(`Sending contact email for ${service} from ${name} (${email})`);
 
       const businessMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
+        from: process.env.MAIL_USERNAME,
         to: process.env.BUSINESS_EMAIL,
         subject: `O-TECH HOME SERVICES Website Contact - ${service}`,
         html: `
@@ -79,7 +72,7 @@ class EmailService {
       };
 
       const customerMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
+        from: process.env.MAIL_USERNAME,
         to: email,
         subject: `O-TECH HOME SERVICES - We received your ${service} enquiry`,
         html: `
@@ -134,7 +127,7 @@ class EmailService {
       }
 
       const businessMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
+        from: process.env.MAIL_USERNAME,
         to: process.env.BUSINESS_EMAIL,
         subject: `O-TECH HOME SERVICES Enquiry - ${data.service}`,
         html: `
@@ -150,7 +143,7 @@ class EmailService {
       };
 
       const customerMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
+        from: process.env.MAIL_USERNAME,
         to: data.email,
         subject: `O-TECH HOME SERVICES - ${data.service} enquiry received`,
         html: `
@@ -183,7 +176,7 @@ class EmailService {
       console.log(`Sending newsletter signup email to ${email}`);
 
       const welcomeMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
+        from: process.env.MAIL_USERNAME,
         to: email,
         subject: `Welcome to ${process.env.BUSINESS_NAME} Newsletter!`,
         html: `
@@ -203,7 +196,7 @@ class EmailService {
       };
 
       const businessMailOptions = {
-        from: `"${process.env.BUSINESS_NAME}" <${process.env.MAIL_USERNAME}>`,
+        from: process.env.MAIL_USERNAME,
         to: process.env.BUSINESS_EMAIL,
         subject: 'New Newsletter Subscription',
         html: `
@@ -243,7 +236,7 @@ app.get('/api/debug', (req, res) => {
     status: 'debug',
     environment: process.env.NODE_ENV || 'development',
     port: PORT,
-    emailConfigured: !!(process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD)
+    emailConfigured: !!process.env.SENDGRID_API_KEY
   });
 });
 
@@ -251,15 +244,15 @@ app.get('/api/email-debug', (req, res) => {
   res.json({
     status: 'email_debug',
     config_status: {
-      MAIL_SERVER: process.env.MAIL_SERVER,
-      MAIL_PORT: process.env.MAIL_PORT,
       MAIL_USERNAME: !!(process.env.MAIL_USERNAME),
       MAIL_PASSWORD: !!(process.env.MAIL_PASSWORD),
+      MAIL_SERVER: process.env.MAIL_SERVER || 'smtp.gmail.com',
+      MAIL_PORT: process.env.MAIL_PORT || '465',
       BUSINESS_EMAIL: process.env.BUSINESS_EMAIL,
       BUSINESS_NAME: process.env.BUSINESS_NAME,
       BUSINESS_PHONE: process.env.BUSINESS_PHONE
     },
-    service_status: 'SMTP email service initialized',
+    service_status: 'Gmail SMTP email service initialized',
     note: 'MAIL_USERNAME and MAIL_PASSWORD show as boolean for security'
   });
 });

@@ -5,10 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Set environment variables
-ENV MAIL_SERVER=smtp.mailgun.org
-ENV MAIL_PORT=587
-ENV MAIL_USERNAME=your-mailgun-smtp-username
-ENV MAIL_PASSWORD=your-mailgun-smtp-password
+ENV SENDGRID_API_KEY=your-sendgrid-api-key
 ENV BUSINESS_EMAIL=otechhomeservices@gmail.com
 ENV BUSINESS_NAME="O-TECH HOME SERVICES LTD"
 ENV BUSINESS_PHONE=02030261006
