@@ -14,23 +14,23 @@ def create_app(config_name='default'):
   # Initialize extensions
   mail.init_app(app)
 
-  # Configure CORS
-  allow_null = os.getenv('ALLOW_NULL_ORIGIN', 'false').lower() == 'true'
-  debug_mode = app.config.get('DEBUG', False)
-  # In development allow all origins unless explicitly disabled
-  if debug_mode and os.getenv('DISABLE_DEV_WILDCARD_CORS', 'false').lower() != 'true':
-    CORS(app, resources={r"/api/*": {"origins": "*"}}, allow_headers=["Content-Type"], supports_credentials=False)
-  else:
-    origins = app.config.get('ALLOWED_ORIGINS', [])
-    if allow_null:
-      origins.append('null')
-    CORS(app, resources={r"/api/*": {"origins": origins}}, allow_headers=["Content-Type"], supports_credentials=True)
+  # Configure CORS - allow all origins in production for Railway to work
+  CORS(app, resources={
+    r"/api/*": {
+      "origins": "*",
+      "methods": ["GET", "POST", "OPTIONS"],
+      "allow_headers": ["Content-Type"],
+      "supports_credentials": False
+    }
+  })
 
-  # Add request logging middleware
+  # Add request logging middleware with error handling
   @app.before_request
   def log_request_info():
-    print(f"[REQUEST] {request.method} {request.path} from {request.remote_addr}", file=sys.stderr)
-    print(f"[HEADERS] {dict(request.headers)}", file=sys.stderr)
+    try:
+      print(f"[REQUEST] {request.method} {request.path} from {request.remote_addr}", file=sys.stderr, flush=True)
+    except Exception as e:
+      print(f"[REQUEST LOG ERROR] {e}", file=sys.stderr, flush=True)
 
   # Register blueprints
   from app.routes.contact import contact_bp
@@ -46,10 +46,18 @@ def create_app(config_name='default'):
   @app.route('/<path:path>')
   def serve_frontend(path):
     """Serve frontend files or index.html for client-side routing"""
-    print(f"[SERVE] Requested path: {path}, static_folder: {app.static_folder}", file=sys.stderr)
-    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-      return send_from_directory(app.static_folder, path)
-    else:
+    try:
+      print(f"[SERVE] Requested path: '{path}'", file=sys.stderr, flush=True)
+      if path and path != "":
+        file_path = os.path.join(app.static_folder, path)
+        if os.path.exists(file_path) and os.path.isfile(file_path):
+          print(f"[SERVE] Serving file: {file_path}", file=sys.stderr, flush=True)
+          return send_from_directory(app.static_folder, path)
+      # Default to index.html for SPA routing
+      print(f"[SERVE] Serving index.html", file=sys.stderr, flush=True)
       return send_from_directory(app.static_folder, 'index.html')
+    except Exception as e:
+      print(f"[SERVE ERROR] {e}", file=sys.stderr, flush=True)
+      return str(e), 500
 
   return app
