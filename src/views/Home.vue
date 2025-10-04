@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import Layout from '../components/Layout.vue'
 import BackgroundSlider from '../components/BackgroundSlider.vue'
 import { businessConfig } from '../config/business.js'
+import { apiFetch } from '../config/api.js'
 import { useSEO } from '../composables/useSEO.js'
 
 // 🎯 SEO Setup for Home Page
@@ -88,7 +89,7 @@ const submitForm = async () => {
   button.textContent = 'Sending...'
   
   try {
-  const response = await fetch('http://localhost:5000/api/contact/enquiry', {
+  const response = await apiFetch('/contact/enquiry', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Layout from '../../components/Layout.vue'
 import { useSEO } from '../../composables/useSEO.js'
+import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Appliances Page
 useSEO({ page: 'appliances' })
@@ -68,7 +69,7 @@ const submitForm = async () => {
   button.textContent = 'Sending...'
   
   try {
-    const response = await fetch('http://localhost:5000/api/contact/appliances', {
+  const response = await apiFetch('/contact/appliances', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
