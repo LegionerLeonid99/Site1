@@ -1,4 +1,4 @@
-# Robots.txt for FixIt Appliances
+# Robots.txt for O-TECH HOME SERVICES
 # This file tells search engines which pages they can crawl
 
 # Allow all search engines to crawl everything
@@ -24,8 +24,8 @@ Disallow: /*backup*
 Allow: /sitemap.xml
 Allow: /favicon.ico
 
-# Sitemap location (update this URL to your actual domain)
-Sitemap: https://www.fixitappliances.co.uk/sitemap.xml
+# Sitemap location
+Sitemap: https://otechhomeservices.co.uk/sitemap.xml
 
 # Additional rules for better SEO
 # Crawl-delay: 1

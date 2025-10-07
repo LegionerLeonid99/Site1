@@ -19,10 +19,44 @@ const app = express();
 app.set('trust proxy', 1); // Trust Railway's proxy for rate limiting
 const PORT = process.env.PORT || 3001;
 
+// ===== DOMAIN REDIRECT MIDDLEWARE =====
+// Redirect railway.app and www to primary domain (no www)
+app.use((req, res, next) => {
+  const host = req.get('host');
+  const protocol = req.get('x-forwarded-proto') || req.protocol;
+  
+  // Skip redirect for localhost development
+  if (host.includes('localhost') || host.includes('127.0.0.1')) {
+    return next();
+  }
+  
+  // Redirect railway.app domain to custom domain
+  if (host.includes('railway.app')) {
+    return res.redirect(301, `https://otechhomeservices.co.uk${req.originalUrl}`);
+  }
+  
+  // Redirect www to non-www (primary domain without www)
+  if (host === 'www.otechhomeservices.co.uk') {
+    return res.redirect(301, `https://otechhomeservices.co.uk${req.originalUrl}`);
+  }
+  
+  // Force HTTPS in production
+  if (protocol !== 'https' && process.env.NODE_ENV === 'production') {
+    return res.redirect(301, `https://${host}${req.originalUrl}`);
+  }
+  
+  next();
+});
+// ===== END DOMAIN REDIRECT =====
+
 // Security middleware
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://otechhomeservices.co.uk',
+    'https://www.otechhomeservices.co.uk'  // Allow www but will redirect to non-www
+  ],
   credentials: false
 }));
 

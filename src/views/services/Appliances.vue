@@ -5,7 +5,7 @@ import { useSEO } from '../../composables/useSEO.js'
 import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Appliances Page
-useSEO({ page: 'appliances' })
+useSEO('appliances')
 
 // Appliance types and brands we service
 const applianceTypes = ref([

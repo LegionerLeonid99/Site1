@@ -127,10 +127,16 @@ export function useSEO(pageKey = 'home', customMeta = {}) {
     // Determine page key from route
     const pathToPageKey = {
       '/': 'home',
+      '/faq': 'faq',
       '/services/appliances': 'appliances',
       '/services/coffee-machines': 'coffeeMachines',
       '/services/dishwashers': 'dishwashers',
-      '/services/washing-machines': 'washingMachines'
+      '/services/washing-machines': 'washingMachines',
+      '/services/hobs': 'hobs',
+      '/services/air-conditioners': 'airConditioners',
+      '/services/kitchen-ventilators': 'kitchenVentilators',
+      '/services/all-electrical': 'allElectrical',
+      '/services/commercial-equipment': 'commercialEquipment'
     }
     
     const newPageKey = pathToPageKey[route.path] || 'home'

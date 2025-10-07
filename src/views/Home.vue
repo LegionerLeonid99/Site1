@@ -7,12 +7,9 @@ import { apiFetch } from '../config/api.js'
 import { useSEO } from '../composables/useSEO.js'
 
 // 🎯 SEO Setup for Home Page
-useSEO({
-  page: 'home',
-  customMeta: {
-    'google-site-verification': '', // Add your Google Search Console verification code here
-    'msvalidate.01': '' // Add your Bing Webmaster verification code here
-  }
+useSEO('home', {
+  'google-site-verification': '', // Add your Google Search Console verification code here
+  'msvalidate.01': '' // Add your Bing Webmaster verification code here
 })
 
 // Reactive data

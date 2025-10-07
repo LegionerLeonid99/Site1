@@ -31,7 +31,7 @@ export const seoConfig = {
     contact: {
       phone: "+44 7551 656880",                // ← CHANGE THIS: Your phone (with country code)
       email: "otechhomeservices@gmail.com",               // ← CHANGE THIS: Your business email
-      website: "https://www.o-techhomeservices.co.uk"       // ← CHANGE THIS: Your website URL
+      website: "https://otechhomeservices.co.uk"       // ← Your website URL (no www)
     },
     
     // 🕒 OPERATING HOURS (for Google My Business integration)
@@ -119,6 +119,12 @@ export const seoConfig = {
       keywords: "air conditioner repair, AC repair London, split system repair, window AC service, cooling problems"
     },
     
+    kitchenVentilators: {
+      title: "Kitchen Ventilator Repair London | Extractor Fan & Hood Service",
+      description: "Expert kitchen ventilator and extractor fan repair in London. Not extracting? Noisy fan? We service all brands and types of kitchen ventilation systems.",
+      keywords: "kitchen ventilator repair, extractor fan repair London, cooker hood repair, kitchen ventilation service"
+    },
+    
     commercialEquipment: {
       title: "Commercial Appliance Repair London | Restaurant Equipment Service",
       description: "Expert commercial appliance repair in London. Restaurant equipment, industrial washing machines, commercial ovens. Fast business service!",
@@ -143,20 +149,20 @@ export const seoConfig = {
     organization: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "@id": "https://www.o-techhomeservices.co.uk/#organization",
+      "@id": "https://otechhomeservices.co.uk/#organization",
       name: "O-TECH HOME SERVICES",
       legalName: "O-TECH HOME SERVICES LTD",
       description: "Professional appliance repair services",
-      url: "https://www.o-techhomeservices.co.uk",
+      url: "https://otechhomeservices.co.uk",
       telephone: "+447398933824",
       email: "otechhomeservices@gmail.com",
       
       address: {
         "@type": "PostalAddress",
-        streetAddress: "123 Repair Street",
+        streetAddress: "206 Maritime House, Greens End",
         addressLocality: "London",
         addressRegion: "Greater London", 
-        postalCode: "SW1A 1AA",
+        postalCode: "SE18 6HB",
         addressCountry: "GB"
       },
       
@@ -254,7 +260,7 @@ export const seoConfig = {
   // 🎯 TECHNICAL SEO
   technical: {
     // Canonical URLs (prevents duplicate content)
-    canonical: "https://www.o-techhomeservices.co.uk",
+    canonical: "https://otechhomeservices.co.uk",
     
     // Robots meta
     robots: "index, follow",

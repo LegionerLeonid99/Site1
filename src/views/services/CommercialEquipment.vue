@@ -5,7 +5,7 @@ import { useSEO } from '../../composables/useSEO.js'
 import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Commercial Equipment Page
-useSEO({ page: 'commercialEquipment' })
+useSEO('commercialEquipment')
 
 const commercialEquipment = ref([
   {

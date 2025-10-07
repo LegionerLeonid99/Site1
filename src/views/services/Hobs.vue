@@ -5,7 +5,7 @@ import { useSEO } from '../../composables/useSEO.js'
 import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Hobs Page
-useSEO({ page: 'hobs' })
+useSEO('hobs')
 
 const hobTypes = ref([
   {

@@ -5,7 +5,7 @@ import { useSEO } from '../../composables/useSEO.js'
 import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Washing Machines Page
-useSEO({ page: 'washingMachines' })
+useSEO('washingMachines')
 
 // Washing machine types and services
 const washingMachineTypes = ref([

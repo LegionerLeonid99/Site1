@@ -5,7 +5,7 @@ import { useSEO } from '../../composables/useSEO.js'
 import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Dishwashers Page
-useSEO({ page: 'dishwashers' })
+useSEO('dishwashers')
 
 // Dishwasher types and services
 const dishwasherTypes = ref([

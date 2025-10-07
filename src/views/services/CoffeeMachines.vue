@@ -5,7 +5,7 @@ import { useSEO } from '../../composables/useSEO.js'
 import { apiFetch } from '../../config/api.js'
 
 // 🎯 SEO Setup for Coffee Machines Page
-useSEO({ page: 'coffeeMachines' })
+useSEO('coffeeMachines')
 
 // Coffee machine types and services
 const coffeeMachineTypes = ref([

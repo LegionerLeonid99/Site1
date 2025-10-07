@@ -31,7 +31,7 @@ export const businessConfig = {
     contact: {
       phone: "02030261006",                 // ← CHANGE THIS: Your business phone
       email: "otechhomeservices@gmail.com",            // ← CHANGE THIS: Your business email
-      website: "www.o-techhomeservices.co.uk"            // ← CHANGE THIS: Your website URL
+      website: "www.otechhomeservices.co.uk"            // ← CHANGE THIS: Your website URL
     }
   },
 
