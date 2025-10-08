@@ -88,6 +88,7 @@ class EmailService {
       const businessMail = {
         to: process.env.BUSINESS_EMAIL,
         from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
+        replyTo: process.env.BUSINESS_EMAIL, // Better deliverability
         subject: `O-TECH HOME SERVICES Website Contact - ${service}`,
         html: `
           <h2>New Website Enquiry (O-TECH HOME SERVICES)</h2>
@@ -105,7 +106,29 @@ class EmailService {
       const customerMail = {
         to: email,
         from: process.env.BUSINESS_EMAIL, // Must be verified in SendGrid
+        replyTo: process.env.BUSINESS_EMAIL, // Better deliverability
         subject: `O-TECH HOME SERVICES - We received your ${service} enquiry`,
+        text: `Thank you - your enquiry is with our team
+
+Hi ${name},
+
+We've received your request regarding ${service}. An O-TECH HOME SERVICES technician will review the details and contact you (usually within 1 business hour during opening times).
+
+Your message:
+${message}
+
+What happens next?
+1. We confirm brand / model details if needed.
+2. We provide an indicative call-out / repair approach.
+3. You choose a convenient visit window.
+
+If anything is urgent you can call us directly on ${process.env.BUSINESS_PHONE}.
+
+Business Hours: Mon-Fri 8:00-18:00 - Sat 9:00-16:00
+Service Areas: Central, North, South, East, West & Greater London
+
+Kind regards,
+O-TECH HOME SERVICES Team`,
         html: `
           <h2 style='margin:0 0 12px 0;'>Thank you - your enquiry is with our team</h2>
           <p style='margin:0 0 12px 0;'>Hi ${name},</p>
