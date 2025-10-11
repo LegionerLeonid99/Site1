@@ -36,12 +36,12 @@ export const seoConfig = {
     
     // 🕒 OPERATING HOURS (for Google My Business integration)
     hours: [
-      { day: "Monday", open: "08:00", close: "18:00" },
-      { day: "Tuesday", open: "08:00", close: "18:00" },
-      { day: "Wednesday", open: "08:00", close: "18:00" },
-      { day: "Thursday", open: "08:00", close: "18:00" },
-      { day: "Friday", open: "08:00", close: "18:00" },
-      { day: "Saturday", open: "09:00", close: "16:00" },
+      { day: "Monday", open: "08:30", close: "15:30" },
+      { day: "Tuesday", open: "08:30", close: "15:30" },
+      { day: "Wednesday", open: "08:30", close: "15:30" },
+      { day: "Thursday", open: "08:30", close: "15:30" },
+      { day: "Friday", open: "08:30", close: "15:30" },
+      { day: "Saturday", open: "08:30", close: "15:30" },
       { day: "Sunday", open: null, close: null } // Closed
     ]
   },

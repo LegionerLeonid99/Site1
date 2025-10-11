@@ -43,12 +43,12 @@ export const businessConfig = {
     
     // 🕒 BUSINESS HOURS - Update with your actual operating hours
     hours: {
-      monday: "8:00 AM - 6:00 PM",
-      tuesday: "8:00 AM - 6:00 PM", 
-      wednesday: "8:00 AM - 6:00 PM",
-      thursday: "8:00 AM - 6:00 PM",
-      friday: "8:00 AM - 6:00 PM",
-      saturday: "9:00 AM - 4:00 PM",
+      monday: "8:30 AM - 3:30 PM",
+      tuesday: "8:30 AM - 3:30 PM", 
+      wednesday: "8:30 AM - 3:30 PM",
+      thursday: "8:30 AM - 3:30 PM",
+      friday: "8:30 AM - 3:30 PM",
+      saturday: "8:30 AM - 3:30 PM",
       sunday: "Closed"
     },
     
