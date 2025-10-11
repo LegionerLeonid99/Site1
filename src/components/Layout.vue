@@ -188,16 +188,6 @@ const scrollToSection = (sectionId) => {
                     {{ businessConfig.location.contact.email }}
                   </a>
                 </div>
-                
-                <div class="flex items-start space-x-3">
-                  <div class="w-5 h-5 bg-blue-100 rounded flex items-center justify-center mt-1">
-                    <span class="text-xs font-bold text-blue-600">📍</span>
-                  </div>
-                  <span class="text-gray-400 text-sm leading-relaxed">
-                    {{ businessConfig.location.address.street }}<br>
-                    {{ businessConfig.location.address.city }}, {{ businessConfig.location.address.postcode }}
-                  </span>
-                </div>
               </div>
             </div>
 
@@ -230,12 +220,8 @@ const scrollToSection = (sectionId) => {
               
               <div class="mt-6 space-y-2 text-sm">
                 <div class="flex justify-between">
-                  <span class="text-gray-400">Mon - Fri</span>
-                  <span class="text-gray-300">8:00 AM - 6:00 PM</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-400">Saturday</span>
-                  <span class="text-gray-300">9:00 AM - 4:00 PM</span>
+                  <span class="text-gray-400">Mon - Sat</span>
+                  <span class="text-gray-300">8:30 AM - 3:30 PM</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-400">Sunday</span>
