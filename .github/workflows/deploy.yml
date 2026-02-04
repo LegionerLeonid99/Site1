@@ -1,89 +1,53 @@
-name: Deploy and Run Server
+name: Deploy Vite App to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
-  workflow_dispatch:
+    branches: ["main"]  # Make sure this matches your default branch name
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # Build job
+  build:
     runs-on: ubuntu-latest
-
-    env:
-      NODE_ENV: production
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "20" # Uses a modern Node version
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci # 'ci' is faster and cleaner than 'install' for CI/CD
 
-      - name: Build application
+      - name: Build
         run: npm run build
 
-      - name: Run tests (if available)
-        run: npm test --if-present
-        continue-on-error: true
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: static-build
-          path: static/
-          retention-days: 7
+          path: ./dist # Vite defaults to 'dist'. Check your vite.config.js if you changed it.
 
-  # Optional: Deploy to a hosting service
-  # Uncomment and configure based on your deployment target
-
-  # deploy-railway:
-  #   needs: build-and-deploy
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Install Railway CLI
-  #       run: npm install -g @railway/cli
-  #
-  #     - name: Deploy to Railway
-  #       run: railway up
-  #       env:
-  #         RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
-  # deploy-docker:
-  #   needs: build-and-deploy
-  #   runs-on: ubuntu-latest
-  #   if: github.ref == 'refs/heads/main'
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #
-  #     - name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v3
-  #
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v3
-  #       with:
-  #         username: ${{ secrets.DOCKER_USERNAME }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
-  #
-  #     - name: Build and push Docker image
-  #       uses: docker/build-push-action@v5
-  #       with:
-  #         context: .
-  #         push: true
-  #         tags: ${{ secrets.DOCKER_USERNAME }}/o-tech-home-services:latest
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
